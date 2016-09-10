@@ -1,0 +1,3 @@
+rootProject.name = 'withoutignite1'
+
+include ':app'

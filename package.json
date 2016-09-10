@@ -1,0 +1,19 @@
+{
+  "name": "FinalProject",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "babel-core": "^5.6.11",
+    "react": "15.3.1",
+    "react-native": "0.33.0",
+    "react-native-facebook-login": "^1.3.0",
+    "react-native-swipe-cards": "0.0.9"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1"
+  }
+}
