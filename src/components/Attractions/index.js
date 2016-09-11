@@ -27,7 +27,8 @@ class Attractions extends Component {
   }
   doSearch() {
     this.setState({loading: true})
-    fetch(`http://localhost:3333/searchYelp?term=${encodeURIComponent(this.search)}&location=${encodeURIComponent(this.location)}`)
+    var apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(this.search)}&location=${encodeURIComponent(this.location)}`;
+    fetch(apiUrl)
       .then(res => res.json())
       .then(businesses => {
         businesses = businesses.map(biz => (
@@ -48,8 +49,8 @@ class Attractions extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput onTextChanged={this.searchText.bind(this)} style={styles.input} placeholder="What do you want to search"/>
-        <TextInput onTextChanged={this.searchLocation.bind(this)} style={styles.input} placeholder="Location?"/>
+        <TextInput onChangeText={this.searchText.bind(this)} style={styles.input} placeholder="What do you want to search"/>
+        <TextInput onChangeText={this.searchLocation.bind(this)} style={styles.input} placeholder="Location?"/>
         <TouchableHighlight onPress={this.doSearch.bind(this)} style={styles.button} underlayColor='#ddd'>
           <View><Text>Do search!</Text></View>
         </TouchableHighlight>
