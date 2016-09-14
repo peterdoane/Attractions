@@ -11,7 +11,7 @@ let Card = React.createClass({
     console.log(this.props);
     return (
       <View style={styles.card}>
-        <Image style={styles.cardImage} source={{uri:this.props.imageUrl}} />
+        <Image style={styles.cardImage} source={{uri:this.props.image_url}} />
         <Text>{this.props.name}</Text>
       </View>
     )

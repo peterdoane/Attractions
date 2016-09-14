@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableHighlight, StyleSheet, ActivityIndicator} from 'react-native';
+import { search } from "../../attractions/attractions";
 
 import PhotoSwiper from '../PhotoSwiper';
 
@@ -27,18 +28,9 @@ class Attractions extends Component {
   }
   doSearch() {
     this.setState({loading: true})
-    var apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(this.search)}&location=${encodeURIComponent(this.location)}`;
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(businesses => {
-        businesses = businesses.map(biz => (
-          {
-            imageUrl: biz.image_url,
-            name: biz.name
-          }
-        ));
-        this.setState({loading: false, photos: businesses});
-      })
+    search(this.search, this.location)
+      .then(businesses => this.setState({loading: false, photos: businesses}));
+
   }
   searchText(val) {
     this.search = val;

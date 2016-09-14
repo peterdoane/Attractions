@@ -1,11 +1,8 @@
-fetch('https://api.yelp.com/v2/search?term=food&location=San+Francisco', {
-  method: 'GET',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    firstParam: 'yourValue',
-    secondParam: 'yourOtherValue',
-  })
-})
+export function search(term, location) {
+  return new Promise((resolve, reject) => {
+    var apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(term)}&location=${encodeURIComponent(location)}`;
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(resolve);
+  });
+}
