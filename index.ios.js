@@ -16,9 +16,6 @@ import {
   Dimensions
 } from 'react-native';
 import Login from './src/components/Login';
-import Attractions from './src/components/Attractions';
-import Itineraries from './src/components/Itineraries';
-import MapScreen from './src/components/MapScreen';
 
 
 import icon from './src/images/location-icon.png';
@@ -78,7 +75,13 @@ class FinalProject extends Component {
           <Navigator
             initialRoute = {{component:IntroPage}}
             renderScene = {(route, navigator) => {
-              return <route.component navigator={navigator}/>
+              console.log(route.name);
+              return (
+                <route.component
+                  navigator={navigator}
+                  stores={route.stores}
+                />
+              );
             }}
           />
         </View>

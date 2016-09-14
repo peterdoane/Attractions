@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, TouchableHighlight, StyleSheet, ActivityIndicator} from 'react-native';
 import { search } from "../../attractions/attractions";
 
-import PhotoSwiper from '../PhotoSwiper';
+//import PhotoSwiper from '../PhotoSwiper';
 
 var styles = StyleSheet.create({
   container: {

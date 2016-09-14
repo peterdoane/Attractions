@@ -1,6 +1,3 @@
-// Tinder.js
-'use strict';
-
 import React from 'react';
 import {StyleSheet, Text, View, Image, AsyncStorage} from 'react-native';
 
