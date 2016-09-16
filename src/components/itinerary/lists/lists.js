@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TextInput, ListView, TouchableHighlight, StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native';
-import { inject, observer } from "mobx-react/native";
+import { inject, observer, toJS } from "mobx-react/native";
+import mobx from "mobx";
+
+console.log(mobx);
 
 var styles = StyleSheet.create({
   container: {
@@ -43,7 +46,10 @@ class Lists extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     ds.cloneWithRows(itinerary.places.slice());
-
+    const places = itinerary.places.slice().map((place) => {
+      return mobx.toJS(place);
+    });
+    console.log(places);
     return <View style={styles.container}>
     <ListView
         dataSource={ds}
