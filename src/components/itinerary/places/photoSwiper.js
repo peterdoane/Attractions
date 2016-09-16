@@ -5,10 +5,10 @@ import Card from "./card";
 import SwipeCards from 'react-native-swipe-cards';
 
 class PhotoSwiper extends Component {
-  handleYup (card) {
-    this.props.onSwipe();
+  handleYup = card => {
+    //this.props.onSwipe();
 
-    AsyncStorage.getItem('itineraries')
+    /*AsyncStorage.getItem('itineraries')
       .then(
         function(itineraries) {
           if (itineraries) {
@@ -32,21 +32,25 @@ class PhotoSwiper extends Component {
         function() {
           AsyncStorage.getItem('itineraries').then(i => console.log(i));
         }
-      )
-  }
+      )*/
+  };
 
-  handleNope (card) {
-    this.props.onSwipe();
+  handleNope = card => {
+    //this.props.onSwipe();
     console.log(`Nope for ${card.text}`)
-  }
+  };
 
   render() {
     console.log(this.props.photos);
+    console.log(this.props.photos.length);
     return (
       <SwipeCards
         cards={this.props.photos}
 
-        renderCard={(cardData) => <Card {...cardData} />}
+        renderCard={(cardData) => {
+          console.log(cardData);
+          return <Card {...cardData} />;
+        }}
         renderNoMoreCards={() => <Text>no more cards</Text>}
 
         handleYup={this.handleYup}

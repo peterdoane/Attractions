@@ -2,8 +2,7 @@ export default function search(location, interests) {
   return new Promise((resolve, reject) => {
     const term = interests.join(",");
     const finalLocation = `${location.latitude},${location.longitude}`;
-    const apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(term)}&location=${encodeURIComponent(finalLocation)}`;
-    console.log(apiUrl)
+    const apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(term)}&ll=${encodeURIComponent(finalLocation)}`;
     fetch(apiUrl)
       .then(res => res.json())
       .then((res) => {
@@ -11,7 +10,6 @@ export default function search(location, interests) {
         resolve(res);
       })
       .catch(err => {
-        console.error(err);
         reject();
       });
   });

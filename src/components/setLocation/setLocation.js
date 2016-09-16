@@ -7,7 +7,7 @@ import {
   MapView,
   AsyncStorage
 } from 'react-native';
-import Itinerary from '../itinerary/itinerary';
+import Interests from '../itinerary/interests/interests';
 import Location from "../../location/location";
 import { inject, observer } from "mobx-react/native";
 
@@ -70,8 +70,8 @@ class SetLocation extends React.Component {
         setLocation() {
           // update store -> set location
           this.props.navigator.push({
-            name: 'Itinerary',
-            component: Itinerary,
+            name: 'Interests',
+            component: Interests,
             stores: {
               location: this.props.location
             }
@@ -95,6 +95,12 @@ class SetLocation extends React.Component {
                     longitudeDelta: 0.065
                   }
                 }
+                annotations={[
+                  {
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                  }
+                ]}
                 style = {
                   {
                     flex: 1
