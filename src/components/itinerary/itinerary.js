@@ -15,6 +15,9 @@ import Lists from './lists/lists';
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  header: {
+    backgroundColor: "#ff0000"
   }
 })
 
@@ -48,6 +51,9 @@ class TabBar extends Component {
   render() {
     return (
       <View style={styles.container}>
+      <View style={styles.header}>
+        <Text>{this.props.stores.itinerary.name}</Text>
+      </View>
       <Provider itinerary={this.props.stores.itinerary}>
         <TabBarIOS
           unselectedTintColor="yellow"

@@ -25,18 +25,32 @@ var styles = StyleSheet.create({
     height: 70,
     marginRight: 20
   },
+  rowContent: {
+    flexDirection: 'column',
+  },
   rowText: {
     fontSize: 20
   }
 })
 
 class Lists extends Component {
+  constructor() {
+    super();
+    this.state = {
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    };
+  }
+
   renderRow = place => {
-    console.log("------->", place);
     return (
       <View style={styles.rowContainer} key={place.id}>
        <Image style={styles.rowImage} source={{uri:place.image_url}} />
+       <View style={styles.rowContent}>
        <Text style={styles.rowText}>{place.name}</Text>
+       <Text style={styles.rowText}>{place.location.display_address[0]}</Text>
+       <Text style={styles.rowText}>{place.location.display_address[1]}</Text>
+       <Text style={styles.rowText}>{place.location.display_address[2]}</Text>
+       </View>
      </View>
     )
   };
@@ -44,12 +58,8 @@ class Lists extends Component {
   render(){
     const { itinerary } = this.props;
 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    ds.cloneWithRows(itinerary.places.slice());
-    const places = itinerary.places.slice().map((place) => {
-      return mobx.toJS(place);
-    });
-    console.log(places);
+    const ds = this.state.dataSource.cloneWithRows(itinerary.places.slice());
+
     return <View style={styles.container}>
     <ListView
         dataSource={ds}
