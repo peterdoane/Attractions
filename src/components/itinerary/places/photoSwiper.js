@@ -6,33 +6,7 @@ import SwipeCards from 'react-native-swipe-cards';
 
 class PhotoSwiper extends Component {
   handleYup = card => {
-    //this.props.onSwipe();
-
-    /*AsyncStorage.getItem('itineraries')
-      .then(
-        function(itineraries) {
-          if (itineraries) {
-            try {
-              itineraries = JSON.parse(itineraries);
-            }
-            catch(e) {
-              itineraries = [];
-            }
-          }
-          else {
-            itineraries = [];
-          }
-
-          itineraries.push(card);
-
-          return AsyncStorage.setItem('itineraries', JSON.stringify(itineraries));
-        }
-      )
-      .then(
-        function() {
-          AsyncStorage.getItem('itineraries').then(i => console.log(i));
-        }
-      )*/
+    this.props.itinerary.places.push(card);
   };
 
   handleNope = card => {
@@ -41,15 +15,12 @@ class PhotoSwiper extends Component {
   };
 
   render() {
-    console.log(this.props.photos);
-    console.log(this.props.photos.length);
     return (
       <SwipeCards
         cards={this.props.photos}
 
         renderCard={(cardData) => {
-          console.log(cardData);
-          return <Card {...cardData} />;
+          return <Card key={cardData.id} {...cardData} />;
         }}
         renderNoMoreCards={() => <Text>no more cards</Text>}
 
@@ -60,6 +31,6 @@ class PhotoSwiper extends Component {
   }
 }
 
-export default inject((stores, props) => ({
-  itinerary: props.stores.itinerary
+export default inject((stores) => ({
+  itinerary: stores.itinerary
 }))(observer(PhotoSwiper));

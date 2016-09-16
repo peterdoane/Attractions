@@ -5,11 +5,12 @@ import {
   Text,
   TabBarIOS,
   StyleSheet,
-  MapView
+  MapView,
 } from 'react-native';
 import Places from "./places/places";
-
+import { Provider } from "mobx-react/native";
 import icon from '../../images/location-icon.png';
+import Lists from './lists/lists';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,7 @@ class TabBar extends Component {
   render() {
     return (
       <View style={styles.container}>
+      <Provider itinerary={this.props.stores.itinerary}>
         <TabBarIOS
           unselectedTintColor="yellow"
           tintColor="white"
@@ -61,18 +63,18 @@ class TabBar extends Component {
                 selectedTab: 'discover',
               });
             }}>
-            <Places stores={this.props.stores}/>
+            <Places/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            title="Itineraries"
+            title="Places"
             icon={icon}
-            selected={this.state.selectedTab === 'itineraries'}
+            selected={this.state.selectedTab === 'places'}
             onPress={() => {
               this.setState({
-                selectedTab: 'itineraries'
+                selectedTab: 'places'
               });
             }}>
-            <View />
+            <Lists />
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"
@@ -87,6 +89,7 @@ class TabBar extends Component {
           </TabBarIOS.Item>
 
         </TabBarIOS>
+        </Provider>
       </View>
     );
   }

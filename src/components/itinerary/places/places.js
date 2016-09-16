@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { inject, observer } from "mobx-react/native";
 import PhotoSwiper from "./photoSwiper";
-import Itineraries from '../../Itineraries';
 import search from "../../../yelp/search";
 
 const styles = StyleSheet.create({
@@ -59,7 +58,6 @@ class Places extends Component {
         <Text>{itinerary.name}</Text>
         <PhotoSwiper
           photos={cards}
-          stores={{ itinerary }}
           onSwipe={this.handleSwipe}
         />
       </View>
@@ -67,4 +65,6 @@ class Places extends Component {
   }
 }
 
-export default inject((stores, props) => ({ itinerary: props.stores.itinerary }))(observer(Places));
+export default inject(stores => {
+  return { itinerary: stores.itinerary }
+})(observer(Places));
