@@ -55,11 +55,14 @@ const styles = StyleSheet.create({
   card: {
     width: (width - 50) / 3,
     height: 150,
-    //opacity: 0.5
+    // opacity: 0.5
   },
   cardImage: {
-    width: 125,
-    height: 150
+    // width: 10,
+    // height: 10
+  },
+  cardText:{
+    fontSize:20
   }
 });
 
@@ -125,7 +128,7 @@ class Categories extends React.Component {
         </View>
         <TextInput
           style={styles.itineraryName} />
-        <Text style={styles.subtitle}>Choose your interests:</Text>
+        <Text style={styles.subtitle}>ab</Text>
         <View style={styles.cards}>
           {cards.map((card, index) => {
             const style = [
@@ -140,8 +143,10 @@ class Categories extends React.Component {
               style={style}
               onPress={this.toggleCard.bind(this, index)}>
               <Image
+                resizeMode='cover'
                 style={styles.cardImage}
                 source={card.image} />
+              <Text>{card.caption}</Text>
             </TouchableHighlight>;
           })}
         </View>

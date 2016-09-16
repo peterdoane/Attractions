@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     //opacity: 0.5
   },
   cardImage: {
-    width: 125,
-    height: 150
+    width: 90,
+    height: 90
   }
 });
 
@@ -70,15 +70,29 @@ class ItineraryComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      cards: {}
+      cards: []
     };
   }
 
-  toggleCard(index) {
+  toggleCard(queryName) {
+    let newCards = [];
+    if(this.state.cards.indexOf(queryName) > -1){
+        this.sourceCards.filter((card) => {
+          return this.state.cards.indexOf(card.queryName) !== -1;
+        }).forEach((card) => {
+        if (card.queryName !== queryName){
+          newCards.push(card.queryName);
+          console.log('queryName',card.queryName,queryName);
+        }
+      })
+    } else{
+      this.state.cards.push(queryName);
+      newCards = this.state.cards;
+    }
+    console.log(newCards);
+    this.props.itinerary.interests = newCards;
     this.setState({
-      cards: {
-        [index]: !this.state.cards[index]
-      }
+      cards: newCards
     });
   }
 
@@ -95,46 +109,57 @@ class ItineraryComponent extends React.Component {
 
     const cards = [{
       caption: 'Hiking',
+      queryName:'hiking',
       image: require('../../images/hiking.png'),
       color: '#E2751F'
     }, {
       caption: 'Art & Museums',
+      queryName:'art,museums',
       image: require('../../images/art.png'),
       color: '#E2751F'
     }, {
       caption: 'Gardens & Parks',
+      queryName:'gardens,parks',
       image: require('../../images/parks.png'),
       color: '#E2751F'
     }, {
       caption: 'Food',
+      queryName:'food',
       image: require('../../images/food.png'),
       color: '#E2751F'
     }, {
       caption: 'Beauty & Spa',
+      queryName:'beauty',
       image: require('../../images/spas.png'),
       color: '#E2751F'
     }, {
       caption: 'Hotels & Lodging',
+      queryName:'hotels',
       image: require('../../images/hotels.png'),
       color: '#E2751F'
     }, {
       caption: 'Tours',
+      queryName:'tours',
       image: require('../../images/tours.png'),
       color: '#E2751F'
     }, {
       caption: 'Nightlife',
+      queryName:'nightlife',
       image: require('../../images/nightlife.png'),
       color: '#E2751F'
     }, {
-      caption: 'Ciname',
+      caption: 'Cinema',
+      queryName:'cinema',
       image: require('../../images/Cinema.png'),
       color: '#E2751F'
     }];
 
+    this.sourceCards = cards;
+
     return (
       <View style={styles.container}>
         <View style={styles.title}>
-          <Text style={styles.titleText}>Your Itinerary</Text>
+          <Text style={styles.titleText}>Name Your Itinerary</Text>
           <TouchableHighlight onPress={this.handleSubmit}>
             <Text>Done</Text>
           </TouchableHighlight>
@@ -156,10 +181,14 @@ class ItineraryComponent extends React.Component {
             return <TouchableHighlight
               key={index}
               style={style}
-              onPress={this.toggleCard.bind(this, index)}>
+              onPress={this.toggleCard.bind(this, card.queryName)}>
+              <View>
               <Image
+                resizeMode='contain'
                 style={styles.cardImage}
                 source={card.image} />
+              <Text>{card.caption}</Text>
+              </View>
             </TouchableHighlight>;
           })}
         </View>

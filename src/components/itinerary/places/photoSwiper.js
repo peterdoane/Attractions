@@ -1,22 +1,13 @@
-import React from 'react';
-import {StyleSheet, Text, View, Image, AsyncStorage} from 'react-native';
-
+import React, { Component } from 'react';
+import { Text, View, Image, AsyncStorage} from 'react-native';
+import { inject, observer } from "mobx-react/native";
+import Card from "./card";
 import SwipeCards from 'react-native-swipe-cards';
 
-let Card = React.createClass({
-  render() {
-    console.log(this.props);
-    return (
-      <View style={styles.card}>
-        <Image style={styles.cardImage} source={{uri:this.props.image_url}} />
-        <Text>{this.props.name}</Text>
-      </View>
-    )
-  }
-})
-
-export default React.createClass({
+class PhotoSwiper extends Component {
   handleYup (card) {
+    this.props.onSwipe();
+
     AsyncStorage.getItem('itineraries')
       .then(
         function(itineraries) {
@@ -42,10 +33,13 @@ export default React.createClass({
           AsyncStorage.getItem('itineraries').then(i => console.log(i));
         }
       )
-  },
+  }
+
   handleNope (card) {
+    this.props.onSwipe();
     console.log(`Nope for ${card.text}`)
-  },
+  }
+
   render() {
     console.log(this.props.photos);
     return (
@@ -60,15 +54,8 @@ export default React.createClass({
       />
     )
   }
-})
+}
 
-const styles = StyleSheet.create({
-  card: {
-    alignItems: 'center'
-  },
-  cardImage: {
-    width: 300,
-    height: 300,
-    marginBottom: 10
-  }
-})
+export default inject((stores, props) => ({
+  itinerary: props.stores.itinerary
+}))(observer(PhotoSwiper));

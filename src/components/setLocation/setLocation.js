@@ -16,18 +16,20 @@ const styles = StyleSheet.create({
     flex: 1
   },
   subcontainer: {
+    flex: 1,
     position: 'absolute',
     left: 0,
     bottom: 0,
-    width: 375,
+    right: 0,
+    // width: 375,
     // height: 200,
     flexDirection: 'column-reverse',
-    alignItems: 'center'
+    alignItems: 'stretch'
   },
   callToAction: {
     backgroundColor: 'green',
     padding: 10,
-    width: 375,
+    // width: 375,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -66,6 +68,7 @@ class SetLocation extends React.Component {
         }
 
         setLocation() {
+          // update store -> set location
           this.props.navigator.push({
             name: 'Itinerary',
             component: Itinerary,
@@ -100,6 +103,7 @@ class SetLocation extends React.Component {
               />
               <View style={styles.subcontainer}>
                 <TouchableHighlight
+                  annotations={[{...location}]}
                   style={styles.callToAction}
                   onPress={this.setLocation.bind(this)}>
                   <Text style={styles.callToActionButton}>

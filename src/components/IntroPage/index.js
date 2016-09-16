@@ -27,8 +27,14 @@ import SetLocation from '../setLocation/setLocation';
     callToActionButton: {
       alignItems: 'center',
       textAlign: 'center',
-      padding: 10,
-      width:200
+      // padding: 10,
+      width: 320,
+      height: 60,
+      fontSize: 24,
+      color: '#FFFFFF',
+      letterSpacing: .99,
+      paddingTop: 13,
+      paddingBottom: 19
     },
     introText: {
       alignItems:'center',
