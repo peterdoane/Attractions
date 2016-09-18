@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TextInput, ListView, TouchableHighlight, StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native';
+import {View, Text, Image, TextInput, Button, ListView, TouchableHighlight, StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native';
 import { inject, observer, toJS } from "mobx-react/native";
 import mobx from "mobx";
+import itineraryPlaces from '../itineraryPlaces';
+
 
 console.log(mobx);
 
@@ -30,6 +32,9 @@ var styles = StyleSheet.create({
   },
   rowText: {
     fontSize: 20
+  },
+  itineraryList: {
+    flex:1
   }
 })
 
@@ -47,10 +52,15 @@ class Lists extends Component {
     var that = this;
     AsyncStorage.getItem('itineraries')
       .then(
-        function(itinerary) {
-          const placeNames = Object.keys(JSON.parse(itinerary));
+        function(dataBlob) {
+          const itineraries = Object.values(JSON.parse(dataBlob)); // => [{ name: 'Different', props: { places: [] }}]
+
+          // {
+            // keys
+          //   values: Object.values(JSON.parse(dataBlob));
+          // }
           that.setState({
-            dsItineraries: ds.cloneWithRows(placeNames)
+            dsItineraries: ds.cloneWithRows(itineraries)
           })
         }
         // dsItineraries.cloneWithRows(itinerary.places.slice());
@@ -69,11 +79,16 @@ class Lists extends Component {
   // <View style={styles.rowContainer} key={place.id}>
   //   {place.name}
   // </View>
-  renderRow = place => {
-    console.log(place);
+  renderRow = itinerary => {
+    console.log(this);
     return (
       <View style={styles.rowContainer}>
-        <Text>{place}</Text>
+        <TouchableHighlight onPress={event => {
+          this.props.navigator.push({
+              name: 'ItineraryPlaces',
+              component: itineraryPlaces,
+              stores: { itinerary }
+        })}}><Text style={styles.itineraryList}>{itinerary.name}</Text></TouchableHighlight>
       </View>
     )
   };
@@ -85,9 +100,9 @@ class Lists extends Component {
 
     return <View style={styles.container}>
     <ListView
-        dataSource={dsItineraries}
-        renderRow={this.renderRow}
-      />
+      dataSource={dsItineraries}
+      renderRow={this.renderRow}
+    />
     </View>;
   }
   // const {itineraries} = this.state;

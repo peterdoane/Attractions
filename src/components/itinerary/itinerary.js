@@ -83,7 +83,7 @@ class TabBar extends Component {
                 selectedTab: 'places'
               });
             }}>
-            <Lists />
+            <Lists navigator={this.props.navigator}/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"

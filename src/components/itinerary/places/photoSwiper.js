@@ -13,12 +13,11 @@ const styles = StyleSheet.create({
 class PhotoSwiper extends Component {
   handleYup = card => {
     var that = this;
-    this.props.itinerary.places.push(card);
     AsyncStorage.getItem('itineraries')
       .then(
         function(itineraries) {
           itineraries = JSON.parse(itineraries);
-          itineraries[that.props.itinerary.name] = that.props.itinerary;
+          itineraries[that.props.itinerary.name].push(card);
           AsyncStorage.setItem('itineraries', JSON.stringify(itineraries));
         }
       )
