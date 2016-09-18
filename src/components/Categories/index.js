@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  TouchableOpacity
   Text,
   TextInput,
   Image,
@@ -56,10 +57,6 @@ const styles = StyleSheet.create({
     width: (width - 50) / 3,
     height: 150,
     // opacity: 0.5
-  },
-  cardImage: {
-    // width: 10,
-    // height: 10
   },
   cardText:{
     fontSize:20
@@ -138,7 +135,7 @@ class Categories extends React.Component {
               } }).background
             ];
 
-            return <TouchableHighlight
+            return <TouchableOpacity
               key={index}
               style={style}
               onPress={this.toggleCard.bind(this, index)}>
@@ -147,7 +144,7 @@ class Categories extends React.Component {
                 style={styles.cardImage}
                 source={card.image} />
               <Text>{card.caption}</Text>
-            </TouchableHighlight>;
+            </TouchableOpacity>;
           })}
         </View>
       </View>

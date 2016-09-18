@@ -33,11 +33,13 @@ var styles = StyleSheet.create({
   }
 })
 
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
 class Lists extends Component {
   constructor() {
     super();
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      dsItineraries: ds.cloneWithRows([])
     };
   }
 
@@ -45,51 +47,61 @@ class Lists extends Component {
     var that = this;
     AsyncStorage.getItem('itineraries')
       .then(
-        function(itineraries) {
+        function(itinerary) {
+          const placeNames = Object.keys(JSON.parse(itinerary));
           that.setState({
-            itineraries: JSON.parse(itineraries)
+            dsItineraries: ds.cloneWithRows(placeNames)
           })
         }
-      )
+        // dsItineraries.cloneWithRows(itinerary.places.slice());
+      ).catch(e => console.log(e));
   }
 
-  // renderRow = place => {
-  //   return (
-  //     <View style={styles.rowContainer} key={place.id}>
-  //      <Image style={styles.rowImage} source={{uri:place.image_url}} />
-  //      <View style={styles.rowContent}>
-  //      <Text style={styles.rowText}>{place.name}</Text>
-  //      {
-  //        place.location.display_address.map(addressLine => (
-  //          <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
-  //        ))
-  //      }
-  //      </View>
-  //    </View>
-  //   )
-  // };
+  // <Image style={styles.rowImage} source={{uri:place.image_url}} />
+  // <View style={styles.rowContent}>
+  // <Text style={styles.rowText}>{place.name}</Text>
+  // {
+  //   place.location.display_address.map(addressLine => (
+  //     <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
+  //   ))
+  // }
+  // </View>
+  // <View style={styles.rowContainer} key={place.id}>
+  //   {place.name}
+  // </View>
+  renderRow = place => {
+    console.log(place);
+    return (
+      <View style={styles.rowContainer}>
+        <Text>{place}</Text>
+      </View>
+    )
+  };
 
   render(){
-  //   const { itinerary } = this.props;
-  //
-  //   const ds = this.state.dataSource.cloneWithRows(itinerary.places.slice());
-  //
-  //   return <View style={styles.container}>
-  //   <ListView
-  //       dataSource={ds}
-  //       renderRow={this.renderRow}
-  //     />
-  //   </View>;
-  // }
-  const {itineraries} = this.state;
-  if (itineraries) {
-    return <View>{Object.keys(itineraries).map(it => <Text>{it}</Text>)}</View>
-  }
-  else {
-    return <View><Text>Loading</Text></View>;
-  }
+    const { dsItineraries } = this.state;
 
-}
+
+
+    return <View style={styles.container}>
+    <ListView
+        dataSource={dsItineraries}
+        renderRow={this.renderRow}
+      />
+    </View>;
+  }
+  // const {itineraries} = this.state;
+  // if (itineraries) {
+  //   return (
+  //     <View>
+  //       {Object.keys(itineraries).map(it => <Text>{it}</Text>)}
+  //     </View>
+  //   )
+  // }
+  // else {
+  //   return <View><Text>Loading</Text></View>;
+  // }
+
 }
 
 export default inject(stores => ({

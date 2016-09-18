@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import Places from "./places/places";
 import { Provider } from "mobx-react/native";
+import discoverIcon from '../../images/photograph.png';
+import placesIcon from '../../images/listing-option.png';
 import locationIcon from '../../images/location-icon.png';
-import placesIcon from '../../images/places.png';
-import discoverIcon from '../../images/place2.png';
 import Lists from './lists/lists';
 
 const styles = StyleSheet.create({
@@ -60,7 +60,8 @@ class TabBar extends Component {
         <TabBarIOS
           unselectedTintColor="yellow"
           tintColor="white"
-          barTintColor="darkslateblue">
+          barTintColor="darkslateblue"
+          >
 
           <TabBarIOS.Item
             title="Discover"

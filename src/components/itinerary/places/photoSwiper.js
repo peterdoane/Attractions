@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, Image, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, Image, AsyncStorage} from 'react-native';
 import { inject, observer } from "mobx-react/native";
 import Card from "./card";
 import SwipeCards from 'react-native-swipe-cards';
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 40
+  }
+});
 
 class PhotoSwiper extends Component {
   handleYup = card => {
@@ -29,7 +35,7 @@ class PhotoSwiper extends Component {
         cards={this.props.photos}
 
         renderCard={(cardData) => {
-          return <Card key={cardData.id} {...cardData} />;
+          return <Card style={styles.title} key={cardData.id} {...cardData} />;
         }}
         renderNoMoreCards={() => <Text>no more cards</Text>}
 
