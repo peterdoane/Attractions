@@ -6,7 +6,16 @@ import SwipeCards from 'react-native-swipe-cards';
 
 class PhotoSwiper extends Component {
   handleYup = card => {
+    var that = this;
     this.props.itinerary.places.push(card);
+    AsyncStorage.getItem('itineraries')
+      .then(
+        function(itineraries) {
+          itineraries = JSON.parse(itineraries);
+          itineraries[that.props.itinerary.name] = that.props.itinerary;
+          AsyncStorage.setItem('itineraries', JSON.stringify(itineraries));
+        }
+      )
   };
 
   handleNope = card => {

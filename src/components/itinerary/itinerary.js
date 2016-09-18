@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import Places from "./places/places";
 import { Provider } from "mobx-react/native";
-import icon from '../../images/location-icon.png';
+import locationIcon from '../../images/location-icon.png';
+import placesIcon from '../../images/places.png';
+import discoverIcon from '../../images/place2.png';
 import Lists from './lists/lists';
 
 const styles = StyleSheet.create({
@@ -62,7 +64,7 @@ class TabBar extends Component {
 
           <TabBarIOS.Item
             title="Discover"
-            icon={icon}
+            icon={discoverIcon}
             selected={this.state.selectedTab === 'discover'}
             onPress={() => {
               this.setState({
@@ -73,7 +75,7 @@ class TabBar extends Component {
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Places"
-            icon={icon}
+            icon={placesIcon}
             selected={this.state.selectedTab === 'places'}
             onPress={() => {
               this.setState({
@@ -84,7 +86,7 @@ class TabBar extends Component {
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"
-            icon={icon}
+            icon={locationIcon}
             selected={this.state.selectedTab === 'map'}
             onPress={() => {
               this.setState({

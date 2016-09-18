@@ -14,7 +14,7 @@ import { inject, observer } from "mobx-react/native";
 
   let styles = StyleSheet.create({
     button: {
-      marginTop: 414
+      height:76
     }
   });
 
@@ -29,6 +29,7 @@ class SetLocation extends React.Component {
         render() {
           return(
             <View>
+              <InputField>
                 <TouchableHighlight
                 style={styles.button}
                   onPress={this.setLocation}>

@@ -41,32 +41,55 @@ class Lists extends Component {
     };
   }
 
-  renderRow = place => {
-    return (
-      <View style={styles.rowContainer} key={place.id}>
-       <Image style={styles.rowImage} source={{uri:place.image_url}} />
-       <View style={styles.rowContent}>
-       <Text style={styles.rowText}>{place.name}</Text>
-       <Text style={styles.rowText}>{place.location.display_address[0]}</Text>
-       <Text style={styles.rowText}>{place.location.display_address[1]}</Text>
-       <Text style={styles.rowText}>{place.location.display_address[2]}</Text>
-       </View>
-     </View>
-    )
-  };
+  componentDidMount() {
+    var that = this;
+    AsyncStorage.getItem('itineraries')
+      .then(
+        function(itineraries) {
+          that.setState({
+            itineraries: JSON.parse(itineraries)
+          })
+        }
+      )
+  }
+
+  // renderRow = place => {
+  //   return (
+  //     <View style={styles.rowContainer} key={place.id}>
+  //      <Image style={styles.rowImage} source={{uri:place.image_url}} />
+  //      <View style={styles.rowContent}>
+  //      <Text style={styles.rowText}>{place.name}</Text>
+  //      {
+  //        place.location.display_address.map(addressLine => (
+  //          <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
+  //        ))
+  //      }
+  //      </View>
+  //    </View>
+  //   )
+  // };
 
   render(){
-    const { itinerary } = this.props;
-
-    const ds = this.state.dataSource.cloneWithRows(itinerary.places.slice());
-
-    return <View style={styles.container}>
-    <ListView
-        dataSource={ds}
-        renderRow={this.renderRow}
-      />
-    </View>;
+  //   const { itinerary } = this.props;
+  //
+  //   const ds = this.state.dataSource.cloneWithRows(itinerary.places.slice());
+  //
+  //   return <View style={styles.container}>
+  //   <ListView
+  //       dataSource={ds}
+  //       renderRow={this.renderRow}
+  //     />
+  //   </View>;
+  // }
+  const {itineraries} = this.state;
+  if (itineraries) {
+    return <View>{Object.keys(itineraries).map(it => <Text>{it}</Text>)}</View>
   }
+  else {
+    return <View><Text>Loading</Text></View>;
+  }
+
+}
 }
 
 export default inject(stores => ({

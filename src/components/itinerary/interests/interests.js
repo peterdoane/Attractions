@@ -6,8 +6,8 @@ import {
   Text,
   TextInput,
   Image,
-  Dimensions
-  // AsyncStorage
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 import { inject, observer } from "mobx-react/native";
 import Itinerary from '../../../itinerary/itinerary';
@@ -97,11 +97,36 @@ class ItineraryComponent extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.navigator.push({
-        name: 'ItineraryView',
-        component: ItineraryView,
-        stores: { itinerary: this.props.itinerary }
-    });
+    var that = this;
+
+    AsyncStorage.getItem('itineraries')
+      .then(
+        function(itineraries) {
+          if (itineraries) {
+            try {
+              itineraries = JSON.parse(itineraries);
+            }
+            catch(e) {}
+          }
+
+          itineraries = itineraries || {};
+
+          var itinerary = itineraries[that.props.itinerary.name] || that.props.itinerary;
+
+          itineraries[itinerary.name] = itinerary;
+
+          AsyncStorage.setItem('itineraries', JSON.stringify(itineraries))
+            .then(
+              function() {
+                that.props.navigator.push({
+                    name: 'ItineraryView',
+                    component: ItineraryView,
+                    stores: { itinerary: that.props.itinerary }
+                });
+              }
+            )
+        }
+      )
   };
 
   render() {

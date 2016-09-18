@@ -13,10 +13,13 @@ import {
   StyleSheet,
   MapView,
   Navigator,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 import Login from './src/components/Login';
 
+
+AsyncStorage.getItem('itineraries').then(x=> console.log(JSON.parse(x)))
 
 import icon from './src/images/location-icon.png';
 import IntroPage from './src/components/IntroPage';

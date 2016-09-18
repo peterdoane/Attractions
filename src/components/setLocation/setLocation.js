@@ -5,7 +5,8 @@ import {
   TouchableHighlight,
   Text,
   MapView,
-  AsyncStorage
+  AsyncStorage,
+  TextInput
 } from 'react-native';
 import Interests from '../itinerary/interests/interests';
 import Location from "../../location/location";
@@ -31,10 +32,17 @@ const styles = StyleSheet.create({
     padding: 10,
     // width: 375,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height:76
   },
   callToActionButton: {
-    color: 'white'
+    color: 'black',
+    fontSize:20
+  },
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
   }
 });
 
@@ -116,6 +124,10 @@ class SetLocation extends React.Component {
                     Set location
                   </Text>
                 </TouchableHighlight>
+                <TextInput style={styles.textInput}
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text}
+                />
               </View>
             </View>
           )
