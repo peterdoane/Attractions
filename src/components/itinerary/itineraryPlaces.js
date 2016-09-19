@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   AppRegistry,
   View,
@@ -6,24 +7,70 @@ import {
   TabBarIOS,
   StyleSheet,
   MapView,
-  ListView
+  ListView,
+  Image
 } from 'react-native';
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 30,
+    paddingBottom: 40
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 15,
+    padding: 15,
+    borderColor: 'black',
+    borderWidth: 1, //StyleSheet.hairlineWidth for "IOS" feel
+    backgroundColor: '#f3f3f3'
+  },
+  rowImage: {
+    width: 70,
+    height: 70,
+    marginRight: 20
+  },
+  rowContent: {
+    flexDirection: 'column',
+  },
+  rowText: {
+    fontSize: 20
+  },
+  itineraryList: {
+    flex:1
+  }
+})
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default class itineraryPlaces extends Component{
-  constructor({stores}){
+  constructor({itinerary}){
     super()
-    this.state = {dsPlaces:ds.cloneWithRows(stores.itinerary.places)}
+    this.state = {dsPlaces:ds.cloneWithRows(itinerary.places)}
+  }
+  renderRow(place){
+    return (
+      <View style={styles.rowContainer}>
+        <Image style={styles.rowImage} source={{uri:place.image_url}} />
+        <View style={styles.rowContent}>
+          <Text style={styles.rowText}>{place.name}</Text>
+          {
+            place.location.display_address.map(addressLine => (
+              <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
+            ))
+          }
+        </View>
+      </View>
+    )
+
   }
   render() {
     console.log(this.props);
-    return <View>
+    return <View style={styles.container}>
     <ListView
       dataSource={this.state.dsPlaces}
-      renderRow= {((place) => {
-        return <Text>{place.name}</Text>
-      })}
-    >{JSON.stringify(this.props.stores.itinerary.name)}</ListView>
+      renderRow= { this.renderRow }
+    />
   </View>
   }};

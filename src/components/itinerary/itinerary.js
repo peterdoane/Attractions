@@ -12,7 +12,7 @@ import { Provider } from "mobx-react/native";
 import discoverIcon from '../../images/photograph.png';
 import placesIcon from '../../images/listing-option.png';
 import locationIcon from '../../images/location-icon.png';
-import Lists from './lists/lists';
+import ListNavigator from './lists/listNavigator';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +83,7 @@ class TabBar extends Component {
                 selectedTab: 'places'
               });
             }}>
-            <Lists navigator={this.props.navigator}/>
+            <ListNavigator/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"

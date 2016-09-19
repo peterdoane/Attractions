@@ -67,18 +67,6 @@ class Lists extends Component {
       ).catch(e => console.log(e));
   }
 
-  // <Image style={styles.rowImage} source={{uri:place.image_url}} />
-  // <View style={styles.rowContent}>
-  // <Text style={styles.rowText}>{place.name}</Text>
-  // {
-  //   place.location.display_address.map(addressLine => (
-  //     <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
-  //   ))
-  // }
-  // </View>
-  // <View style={styles.rowContainer} key={place.id}>
-  //   {place.name}
-  // </View>
   renderRow = itinerary => {
     console.log(this);
     return (
@@ -87,7 +75,8 @@ class Lists extends Component {
           this.props.navigator.push({
               name: 'ItineraryPlaces',
               component: itineraryPlaces,
-              stores: { itinerary }
+              passProps: {itinerary},
+              title: itinerary.name
         })}}><Text style={styles.itineraryList}>{itinerary.name}</Text></TouchableHighlight>
       </View>
     )
@@ -105,18 +94,6 @@ class Lists extends Component {
     />
     </View>;
   }
-  // const {itineraries} = this.state;
-  // if (itineraries) {
-  //   return (
-  //     <View>
-  //       {Object.keys(itineraries).map(it => <Text>{it}</Text>)}
-  //     </View>
-  //   )
-  // }
-  // else {
-  //   return <View><Text>Loading</Text></View>;
-  // }
-
 }
 
 export default inject(stores => ({

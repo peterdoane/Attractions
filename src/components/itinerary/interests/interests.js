@@ -12,6 +12,7 @@ import {
 import { inject, observer } from "mobx-react/native";
 import Itinerary from '../../../itinerary/itinerary';
 import ItineraryView from "../itinerary";
+import checkMark from "../../../images/places.png";
 
 var width = Dimensions.get('window').width;
 
@@ -63,6 +64,13 @@ const styles = StyleSheet.create({
   cardImage: {
     width: 90,
     height: 90
+  },
+  checkMark: {
+    width: 16,
+    height: 16,
+    position: 'absolute',
+    top: 0,
+    right: 0
   }
 });
 
@@ -202,12 +210,14 @@ class ItineraryComponent extends React.Component {
                 backgroundColor: card.color
               } }).background
             ];
-
+            
+            var selected = this.state.cards.some(c => c === card.queryName);
             return <TouchableHighlight
               key={index}
               style={style}
               onPress={this.toggleCard.bind(this, card.queryName)}>
               <View>
+              {selected ? <Image style={styles.checkMark} source={checkMark} /> : null}
               <Image
                 resizeMode='contain'
                 style={styles.cardImage}
