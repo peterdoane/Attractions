@@ -66,5 +66,5 @@ class Places extends Component {
 }
 
 export default inject(stores => {
-  return { itinerary: stores.itinerary }
+  return { itinerary: stores.itineraries.active }
 })(observer(Places));

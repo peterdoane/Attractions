@@ -71,6 +71,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0
+  },
+  done: {
+    alignItems: 'flex-end',
+    marginLeft: 340
   }
 });
 
@@ -144,37 +148,37 @@ class ItineraryComponent extends React.Component {
       caption: 'Hiking',
       queryName:'hiking',
       image: require('../../../images/hiking.png'),
-      color: '#E2751F'
+      color: '#E2751F',
     }, {
       caption: 'Art & Museums',
       queryName:'art,museums',
       image: require('../../../images/art.png'),
-      color: '#E2751F'
+      color: '#5FD669'
     }, {
       caption: 'Gardens & Parks',
       queryName:'gardens,parks',
       image: require('../../../images/parks.png'),
-      color: '#E2751F'
+      color: '#F7E357'
     }, {
       caption: 'Food',
       queryName:'food',
       image: require('../../../images/food.png'),
-      color: '#E2751F'
+      color: '#AC61E6'
     }, {
       caption: 'Beauty & Spa',
       queryName:'beauty',
       image: require('../../../images/spas.png'),
-      color: '#E2751F'
+      color: '#45BEC8'
     }, {
       caption: 'Hotels & Lodging',
       queryName:'hotels',
       image: require('../../../images/hotels.png'),
-      color: '#E2751F'
+      color: '#D66C69'
     }, {
       caption: 'Tours',
       queryName:'tours',
       image: require('../../../images/tours.png'),
-      color: '#E2751F'
+      color: '#E64A19'
     }, {
       caption: 'Nightlife',
       queryName:'nightlife',
@@ -184,7 +188,7 @@ class ItineraryComponent extends React.Component {
       caption: 'Cinema',
       queryName:'cinema',
       image: require('../../../images/Cinema.png'),
-      color: '#E2751F'
+      color: '#5FD669'
     }];
 
     this.sourceCards = cards;
@@ -194,7 +198,7 @@ class ItineraryComponent extends React.Component {
         <View style={styles.title}>
           <Text style={styles.titleText}>Name Your Itinerary</Text>
           <TouchableHighlight onPress={this.handleSubmit}>
-            <Text>Done</Text>
+            <Text style={styles.done}>Done</Text>
           </TouchableHighlight>
         </View>
         <TextInput
@@ -210,7 +214,7 @@ class ItineraryComponent extends React.Component {
                 backgroundColor: card.color
               } }).background
             ];
-            
+
             var selected = this.state.cards.some(c => c === card.queryName);
             return <TouchableHighlight
               key={index}

@@ -5,14 +5,14 @@ import {
   Text,
   TabBarIOS,
   StyleSheet,
-  MapView,
 } from 'react-native';
 import Places from "./places/places";
-import { Provider } from "mobx-react/native";
 import discoverIcon from '../../images/photograph.png';
 import placesIcon from '../../images/listing-option.png';
 import locationIcon from '../../images/location-icon.png';
 import ListNavigator from './lists/listNavigator';
+import MapView from '../mapView/mapView';
+import { inject, observer } from "mobx-react/native";
 
 const styles = StyleSheet.create({
   container: {
@@ -24,39 +24,21 @@ const styles = StyleSheet.create({
 })
 
 class TabBar extends Component {
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.state = {
-      selectedTab: 'discover',
-      mockLocations: [
-        {
-          latitude: -73.5,
-          longitude: 45.5,
-          name: 'First Location'
-        },
-        {
-          latitude: -73.55,
-          longitude: 45.42,
-          name: 'Second Location'
-        },
-        {
-          latitude: -73.35,
-          longitude: 45.62,
-          name: 'Third Location'
-        },
-
-      ]
+      selectedTab: 'discover'
     };
   }
 
   render() {
+    const { itinerary } = this.props;
+
     return (
       <View style={styles.container}>
       <View style={styles.header}>
-        <Text>{this.props.stores.itinerary.name}</Text>
+        <Text>{itinerary.name}</Text>
       </View>
-      <Provider itinerary={this.props.stores.itinerary}>
         <TabBarIOS
           unselectedTintColor="yellow"
           tintColor="white"
@@ -94,14 +76,15 @@ class TabBar extends Component {
                 selectedTab: 'map'
               });
             }}>
-            <View />
+            <MapView />
           </TabBarIOS.Item>
 
         </TabBarIOS>
-        </Provider>
       </View>
     );
   }
 }
 
-export default TabBar;
+export default inject(stores => ({
+  itinerary: stores.itineraries.active
+}))(observer(TabBar));

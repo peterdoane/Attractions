@@ -7,6 +7,13 @@ class Location {
       longitude: null
     });
   }
+
+  toJSON() {
+    return {
+      latitude: this.latitude,
+      longitude: this.longitude
+    };
+  }
 }
 
 export default Location;

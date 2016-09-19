@@ -6,8 +6,18 @@ class Itinerary {
       name: '',
       location: attributes.location,
       interests: [],
-      places: []
+      places: [],
+      active: false
     });
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      location: this.location.toJSON(),
+      interests: this.interests.slice(),
+      places: this.places.slice()
+    };
   }
 }
 

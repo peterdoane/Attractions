@@ -17,12 +17,11 @@ import {
   AsyncStorage
 } from 'react-native';
 import Login from './src/components/Login';
-
-
-AsyncStorage.getItem('itineraries').then(x=> console.log(JSON.parse(x)))
-
+import Itineraries from "./src/itinerary/itineraries";
+import {Provider} from "mobx-react/native";
 import icon from './src/images/location-icon.png';
 import IntroPage from './src/components/IntroPage';
+import Itinerary from "./src/components/itinerary/itinerary";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -44,41 +43,32 @@ const styles = StyleSheet.create({
 })
 
 class FinalProject extends Component {
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.state = {
-      selectedTab: 'discover',
-      mockLocations: [
-        {
-          latitude: -73.5,
-          longitude: 45.5,
-          name: 'First Location'
-        },
-        {
-          latitude: -73.55,
-          longitude: 45.42,
-          name: 'Second Location'
-        },
-        {
-          latitude: -73.35,
-          longitude: 45.62,
-          name: 'Third Location'
-        },
-
-      ]
+      isReady: false,
+      itineraries: new Itineraries()
     };
   }
 
+  componentWillMount() {
+    this.state.itineraries.load()
+      .then(() => this.setState({ isReady: true }));
+  }
+
   render() {
+    if (!this.state.isReady) return null;
     return (
+      <Provider itineraries={this.state.itineraries}>
       <View style={styles.container}>
         <Image source={require('./src/images/background.jpg')} style={styles.backgroundImage} />
         <View style={styles.subContainer}>
           <Navigator
-            initialRoute = {{component:IntroPage}}
+            initialRoute = {{
+              component: !this.state.itineraries.itineraries.length ? 
+                IntroPage : Itinerary
+            }}
             renderScene = {(route, navigator) => {
-              console.log(route.name);
               return (
                 <route.component
                   navigator={navigator}
@@ -89,6 +79,7 @@ class FinalProject extends Component {
           />
         </View>
       </View>
+      </Provider>
     );
   }
 }

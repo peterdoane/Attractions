@@ -13,14 +13,15 @@ const styles = StyleSheet.create({
 class PhotoSwiper extends Component {
   handleYup = card => {
     var that = this;
-    AsyncStorage.getItem('itineraries')
-      .then(
-        function(itineraries) {
-          itineraries = JSON.parse(itineraries);
-          itineraries[that.props.itinerary.name].push(card);
-          AsyncStorage.setItem('itineraries', JSON.stringify(itineraries));
-        }
-      )
+    this.props.itinerary.places.push(card);
+    // AsyncStorage.getItem('itineraries')
+    //   .then(
+    //     function(itineraries) {
+    //       itineraries = JSON.parse(itineraries);
+    //       itineraries[that.props.itinerary.name].places.push(card);
+    //       AsyncStorage.setItem('itineraries', JSON.stringify(itineraries));
+    //     }
+    //   )
   };
 
   handleNope = card => {
@@ -46,5 +47,5 @@ class PhotoSwiper extends Component {
 }
 
 export default inject((stores) => ({
-  itinerary: stores.itinerary
+  itinerary: stores.itineraries.active
 }))(observer(PhotoSwiper));

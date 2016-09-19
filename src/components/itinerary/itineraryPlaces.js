@@ -35,7 +35,7 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
   },
   rowText: {
-    fontSize: 20
+    fontSize: 13
   },
   itineraryList: {
     flex:1
@@ -69,6 +69,7 @@ export default class itineraryPlaces extends Component{
     console.log(this.props);
     return <View style={styles.container}>
     <ListView
+      enableEmptySection={false}
       dataSource={this.state.dsPlaces}
       renderRow= { this.renderRow }
     />
