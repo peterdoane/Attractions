@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TextInput, Button, ListView, TouchableHighlight, StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native';
 import { inject, observer, toJS } from "mobx-react/native";
-import mobx from "mobx";
-import itineraryPlaces from '../itineraryPlaces';
-
-
-console.log(mobx);
+import itineraryPlaces from '../itinerary/places/places';
 
 var styles = StyleSheet.create({
   container: {
@@ -46,22 +42,27 @@ class Lists extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dsItineraries: ds.cloneWithRows(props.itineraries.slice())
+      dsItineraries: ds.cloneWithRows((
+        props.itineraries && props.itineraries.itineraries ? props.itineraries.itineraries.slice() : []))
     };
   }
 
-  renderRow = itinerary => {
-    console.log(this);
+  renderRow = (itinerary, section, index) => {
     return (
-      <View style={styles.rowContainer}>
-        <TouchableHighlight onPress={event => {
-          AsyncStorage.setItem('activeItinerary', JSON.stringify(itinerary))
-          this.props.navigator.push({
-              name: 'ItineraryPlaces',
-              component: itineraryPlaces,
-              passProps: {itinerary},
-              title: itinerary.name
-        })}}><Text style={styles.itineraryList}>{itinerary.name}</Text></TouchableHighlight>
+      <View>
+        <TouchableHighlight
+          style={styles.rowContainer}
+          onPress={event => {
+            this.props.itineraries.active = index;
+            this.props.itineraries.save();
+            //AsyncStorage.setItem('activeItinerary', JSON.stringify(itinerary))
+            this.props.navigator.push({
+              component: itineraryPlaces
+            })
+          }}
+        >
+          <Text style={styles.itineraryList}>{itinerary.name}</Text>
+        </TouchableHighlight>
       </View>
     )
   };

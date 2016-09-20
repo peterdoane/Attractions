@@ -14,7 +14,7 @@ import {
     AsyncStorage,
     NavigatorIOS,
 } from 'react-native';
-import Lists from './lists';
+import Lists from './itinerariesList';
 
 class ListNavigator extends Component{
   render(){

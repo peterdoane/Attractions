@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TextInput, ListView, TouchableHighlight,
   StyleSheet, ActivityIndicator, AsyncStorage} from 'react-native';
-import SetLocation from '../setLocation/setLocation';
+import SetLocation from '../itinerary/setLocation/setLocation';
+import Itinerary from "../../itinerary/itinerary";
 
   let styles = StyleSheet.create({
     backgroundImage: {
@@ -51,7 +52,8 @@ class IntroPage extends Component{
   requireLocationPermission() {
     this.props.navigator.push({
         name: 'SetLocation',
-        component: SetLocation
+        component: SetLocation,
+        itinerary: new Itinerary()
     });
   }
 

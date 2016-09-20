@@ -7,6 +7,11 @@ import SwipeCards from 'react-native-swipe-cards';
 const styles = StyleSheet.create({
   title: {
     fontSize: 40
+  },
+  backButton: {
+    position: 'absolute',
+    top: 0,
+    left: 0
   }
 });
 
@@ -31,17 +36,20 @@ class PhotoSwiper extends Component {
 
   render() {
     return (
-      <SwipeCards
-        cards={this.props.photos}
+      <View>
+        <SwipeCards
+          cards={this.props.photos}
 
-        renderCard={(cardData) => {
-          return <Card style={styles.title} key={cardData.id} {...cardData} />;
-        }}
-        renderNoMoreCards={() => <Text>no more cards</Text>}
+          renderCard={(cardData) => {
+            return <Card style={styles.title} key={cardData.id} {...cardData} />;
+          }}
+          renderNoMoreCards={() => <Text>no more cards</Text>}
 
-        handleYup={this.handleYup}
-        handleNope={this.handleNope}
-      />
+          handleYup={this.handleYup}
+          handleNope={this.handleNope}
+        />
+        <View style={styles.backButton}><Text>Back</Text></View>
+      </View>
     )
   }
 }

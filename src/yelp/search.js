@@ -6,7 +6,6 @@ export default function search(location, interests) {
     fetch(apiUrl)
       .then(res => res.json())
       .then((res) => {
-        console.log(res);
         resolve(res);
       })
       .catch(err => {

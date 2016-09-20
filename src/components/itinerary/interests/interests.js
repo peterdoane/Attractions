@@ -79,11 +79,12 @@ const styles = StyleSheet.create({
 });
 
 class ItineraryComponent extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       cards: []
     };
+    console.log(props.itinerary);
   }
 
   toggleCard(queryName) {
@@ -101,7 +102,6 @@ class ItineraryComponent extends React.Component {
       this.state.cards.push(queryName);
       newCards = this.state.cards;
     }
-    console.log(newCards);
     this.props.itinerary.interests = newCards;
     this.setState({
       cards: newCards
@@ -109,36 +109,12 @@ class ItineraryComponent extends React.Component {
   }
 
   handleSubmit = () => {
-    var that = this;
-
-    AsyncStorage.getItem('itineraries')
-      .then(
-        function(itineraries) {
-          if (itineraries) {
-            try {
-              itineraries = JSON.parse(itineraries);
-            }
-            catch(e) {}
-          }
-
-          itineraries = itineraries || {};
-
-          var itinerary = itineraries[that.props.itinerary.name] || that.props.itinerary;
-
-          itineraries[itinerary.name] = itinerary;
-
-          AsyncStorage.setItem('itineraries', JSON.stringify(itineraries))
-            .then(
-              function() {
-                that.props.navigator.push({
-                    name: 'ItineraryView',
-                    component: ItineraryView,
-                    stores: { itinerary: that.props.itinerary }
-                });
-              }
-            )
-        }
-      )
+    this.props.itineraries.create(this.props.itinerary);
+    this.props.itineraries.save();
+    this.props.navigator.push({
+        name: 'ItineraryView',
+        component: ItineraryView
+    });
   };
 
   render() {
@@ -202,6 +178,7 @@ class ItineraryComponent extends React.Component {
           </TouchableHighlight>
         </View>
         <TextInput
+          defaultValue={itinerary.name}
           onChangeText={name => itinerary.name = name}
           style={styles.itineraryName}
         />
@@ -237,6 +214,6 @@ class ItineraryComponent extends React.Component {
 }
 
 export default inject((stores, props) => ({
-  itinerary: new Itinerary({ location: props.stores.location }),
-  location: props.stores.location
+  itinerary: props.itinerary,
+  itineraries: stores.itineraries
 }))(observer(ItineraryComponent));

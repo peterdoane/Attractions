@@ -8,8 +8,7 @@ import {
   AsyncStorage,
   TextInput
 } from 'react-native';
-import Interests from '../itinerary/interests/interests';
-import Location from "../../location/location";
+import Interests from '../interests/interests';
 import { inject, observer } from "mobx-react/native";
 
 const styles = StyleSheet.create({
@@ -56,15 +55,17 @@ class SetLocation extends React.Component {
         }
 
         componentWillMount(){
+          const { itinerary } = this.props;
+          console.log(itinerary);
             navigator.geolocation.getCurrentPosition(
               position => {
-                this.props.location.latitude = position.coords.latitude;
-                this.props.location.longitude = position.coords.longitude;
+                itinerary.location.latitude = position.coords.latitude;
+                itinerary.location.longitude = position.coords.longitude;
                 this.setState({ isReady: true });
               },
               error => {
-                this.props.location.latitude = -73.5;
-                this.props.location.longitude = 45.5;
+                itinerary.location.latitude = -73.5;
+                itinerary.location.longitude = 45.5;
                 this.setState({ isReady: true });
               },
               {
@@ -75,20 +76,17 @@ class SetLocation extends React.Component {
             );
         }
 
-        setLocation() {
-          // update store -> set location
+        setLocation = () => {
           this.props.navigator.push({
-            name: 'Interests',
             component: Interests,
-            stores: {
-              location: this.props.location
-            }
+            itinerary: this.props.itinerary
           });
-        }
+        };
 
         render() {
-          const { location } = this.props;
-          if (!this.state.isReady || !location.latitude || !location.longitude) {
+          const { itinerary } = this.props;
+
+          if (!this.state.isReady || !itinerary.location.latitude || !itinerary.location.longitude) {
             return null;
           }
 
@@ -97,16 +95,16 @@ class SetLocation extends React.Component {
               <MapView
                 region = {
                   {
-                    latitude: location.latitude,
-                    longitude: location.longitude,
+                    latitude: itinerary.location.latitude,
+                    longitude: itinerary.location.longitude,
                     latitudeDelta: 0.12,
                     longitudeDelta: 0.065
                   }
                 }
                 annotations={[
                   {
-                    latitude: location.latitude,
-                    longitude: location.longitude,
+                    latitude: itinerary.location.latitude,
+                    longitude: itinerary.location.longitude
                   }
                 ]}
                 style = {
@@ -115,11 +113,11 @@ class SetLocation extends React.Component {
                   }
                 }
               />
+
               <View style={styles.subcontainer}>
                 <TouchableHighlight
-                  annotations={[{...location}]}
                   style={styles.callToAction}
-                  onPress={this.setLocation.bind(this)}>
+                  onPress={this.setLocation}>
                   <Text style={styles.callToActionButton}>
                     Set location
                   </Text>
@@ -134,4 +132,8 @@ class SetLocation extends React.Component {
         }
       }
 
-export default inject(() => ({ location: new Location() }))(observer(SetLocation));
+
+export default inject((stores, props) => ({
+  itineraries: stores.itineraries,
+  itinerary: props.itinerary
+}))(observer(SetLocation));

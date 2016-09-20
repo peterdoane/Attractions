@@ -1,70 +1,83 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { inject, observer } from "mobx-react/native";
-import PhotoSwiper from "./photoSwiper";
-import search from "../../../yelp/search";
+import React, { Component } from 'react';
+import {inject, observer} from "mobx-react/native";
 
-const styles = StyleSheet.create({
+import {
+  AppRegistry,
+  View,
+  Text,
+  TabBarIOS,
+  StyleSheet,
+  MapView,
+  ListView,
+  Image
+} from 'react-native';
+
+var styles = StyleSheet.create({
   container: {
-    marginTop: 40
+    flex: 1,
+    paddingTop: 30,
+    paddingBottom: 40
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 15,
+    padding: 15,
+    borderColor: 'black',
+    borderWidth: 1, //StyleSheet.hairlineWidth for "IOS" feel
+    backgroundColor: '#f3f3f3'
+  },
+  rowImage: {
+    width: 70,
+    height: 70,
+    marginRight: 20
+  },
+  rowContent: {
+    flexDirection: 'column',
+  },
+  rowText: {
+    fontSize: 13
+  },
+  itineraryList: {
+    flex:1
   }
-});
+})
 
-class Places extends Component {
-  constructor() {
-    super();
-    this.state = {
-      cards: []
-    };
-  }
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-  componentWillMount() {
-    const { itinerary } = this.props;
-    const location = null; // pick location from the store after it has been set in setLocation
-
-    // TODO: search(term, location)
-    search(itinerary.location, itinerary.interests).then(response => {
-      this.setState({
-        cards: response,
-        cardsLeft: response.length,
-        cardsReceived: true
-      });
-    });
-  }
-
-  componentDidUpdate() {
-    const {
-      cardsLeft
-    } = this.state;
-
-    if (cardsLeft === 0) {
-      this.props.navigator.push({
-        name: 'Itineraries',
-        component: Itineraries,
-      });
-    }
+class ItineraryPlaces extends Component {
+  constructor({itinerary}){
+    super()
+    this.state = {dsPlaces:ds.cloneWithRows(itinerary.places.slice())}
   }
 
-  handleSwipe = () => {
-    this.setState({ cardsLeft: this.state.cardsLeft - 1})
-  };
+  renderRow(place){
+    return (
+      <View style={styles.rowContainer}>
+        <Image style={styles.rowImage} source={{uri:place.image_url}} />
+        <View style={styles.rowContent}>
+          <Text style={styles.rowText}>{place.name}</Text>
+          {
+            place.location.display_address.map(addressLine => (
+              <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
+            ))
+          }
+        </View>
+      </View>
+    )
+  }
 
   render() {
-    const { itinerary } = this.props;
-    const { cards } = this.state;
-
-    return (
-      <View style={styles.container}>
-        <Text>{itinerary.name}</Text>
-        <PhotoSwiper
-          photos={cards}
-          onSwipe={this.handleSwipe}
-        />
-      </View>
-    );
+    console.log(this.props);
+    return <View style={styles.container}>
+    <ListView
+      enableEmptySection={false}
+      dataSource={this.state.dsPlaces}
+      renderRow= { this.renderRow }
+    />
+  </View>
   }
 }
-
-export default inject(stores => {
-  return { itinerary: stores.itineraries.active }
-})(observer(Places));
+export default inject(stores => ({
+  itinerary: stores.itineraries.active
+}))(observer(ItineraryPlaces));

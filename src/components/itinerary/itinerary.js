@@ -6,12 +6,12 @@ import {
   TabBarIOS,
   StyleSheet,
 } from 'react-native';
-import Places from "./places/places";
-import discoverIcon from '../../images/photograph.png';
+import Discover from "./discover/discover";
+import discoverIcon from '../../images/location-icon.png';
 import placesIcon from '../../images/listing-option.png';
 import locationIcon from '../../images/location-icon.png';
-import ListNavigator from './lists/listNavigator';
-import MapView from '../mapView/mapView';
+import Itineraries from '../itineraries/itineraries';
+import MapView from './mapView/mapView';
 import { inject, observer } from "mobx-react/native";
 
 const styles = StyleSheet.create({
@@ -54,7 +54,7 @@ class TabBar extends Component {
                 selectedTab: 'discover',
               });
             }}>
-            <Places/>
+            <Discover navigator={this.props.navigator}/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Places"
@@ -65,7 +65,7 @@ class TabBar extends Component {
                 selectedTab: 'places'
               });
             }}>
-            <ListNavigator/>
+            <Itineraries/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"

@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -18,10 +12,10 @@ import {
 } from 'react-native';
 import Login from './src/components/Login';
 import Itineraries from "./src/itinerary/itineraries";
+import ItineraryView from "./src/components/itinerary/itinerary";
 import {Provider} from "mobx-react/native";
 import icon from './src/images/location-icon.png';
 import IntroPage from './src/components/IntroPage';
-import Itinerary from "./src/components/itinerary/itinerary";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -58,6 +52,8 @@ class FinalProject extends Component {
 
   render() {
     if (!this.state.isReady) return null;
+
+    console.log("hi");
     return (
       <Provider itineraries={this.state.itineraries}>
       <View style={styles.container}>
@@ -65,14 +61,17 @@ class FinalProject extends Component {
         <View style={styles.subContainer}>
           <Navigator
             initialRoute = {{
-              component: !this.state.itineraries.itineraries.length ? 
-                IntroPage : Itinerary
+              component: !this.state.itineraries.itineraries.length ?
+                IntroPage: ItineraryView
             }}
             renderScene = {(route, navigator) => {
+              const props = { ...route };
+              delete props.name;
+              delete props.component;
               return (
                 <route.component
                   navigator={navigator}
-                  stores={route.stores}
+                  {...props}
                 />
               );
             }}

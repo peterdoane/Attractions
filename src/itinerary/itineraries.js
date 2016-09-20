@@ -25,6 +25,13 @@ class Itineraries {
     return this.itineraries.slice().shift();
   }
 
+  create(itinerary) {
+    this.itineraries.forEach(itinerary => itinerary.active = false);
+    this.itineraries.push(itinerary);
+    itinerary.active = true;
+    return itinerary;
+  }
+
   load() {
     return new Promise(resolve => {
       AsyncStorage.getItem('itineraries')
@@ -49,7 +56,7 @@ class Itineraries {
   }
 
   save() {
-    AsyncStorage.setItem('itineraries', this.toJSON());
+    AsyncStorage.setItem('itineraries', JSON.stringify(this.toJSON()));
   }
 }
 
