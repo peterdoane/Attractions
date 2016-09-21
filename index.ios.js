@@ -14,7 +14,6 @@ import Login from './src/components/Login';
 import Itineraries from "./src/itinerary/itineraries";
 import ItineraryView from "./src/components/itinerary/itinerary";
 import {Provider} from "mobx-react/native";
-import icon from './src/images/location-icon.png';
 import IntroPage from './src/components/IntroPage';
 
 const width = Dimensions.get('window').width;

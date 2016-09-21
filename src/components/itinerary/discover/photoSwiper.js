@@ -43,12 +43,12 @@ class PhotoSwiper extends Component {
           renderCard={(cardData) => {
             return <Card style={styles.title} key={cardData.id} {...cardData} />;
           }}
-          renderNoMoreCards={() => <Text>no more cards</Text>}
+          renderNoMoreCards={() => <Text style={styles.cardText}>no more cards</Text>}
 
           handleYup={this.handleYup}
           handleNope={this.handleNope}
         />
-        <View style={styles.backButton}><Text>Back</Text></View>
+        <View style={styles.backButton}></View>
       </View>
     )
   }

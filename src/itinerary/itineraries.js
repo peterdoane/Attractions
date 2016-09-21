@@ -6,7 +6,8 @@ class Itineraries {
   constructor() {
     extendObservable(this, {
       itineraries: [],
-      isLoaded: false
+      isLoaded: false,
+      activeIndex: 0
     });
   }
 
@@ -15,6 +16,7 @@ class Itineraries {
   }
 
   set active(index) {
+    this.activeIndex = index;
     this.itineraries.forEach(itinerary => itinerary.active = false);
     this.itineraries[index].active = true;
   }

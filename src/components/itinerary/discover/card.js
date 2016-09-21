@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     color: '#FF6E3F',
     textAlign: 'left',
     alignSelf: 'stretch',
-    paddingLeft: 20
+    paddingLeft: 20,
+    fontSize: 20
   }
 });
 

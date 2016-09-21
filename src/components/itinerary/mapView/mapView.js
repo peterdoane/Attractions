@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 
 class MapViewComponent extends React.Component {
         getAnnotations(){
-
           return this.props.itinerary.places.map(place => {
             return {
             latitude: place.location.coordinate.latitude,
@@ -78,11 +77,12 @@ class MapViewComponent extends React.Component {
                maxLong = place.location.coordinate.longitude;
              }
            })
+
            return {
              latitude:(minLat + maxLat)/2,
              longitude:(minLong + maxLong)/2,
-             latitudeDelta: 0.12,
-             longitudeDelta: 0.065
+             latitudeDelta: (maxLat - minLat) * 1.2,
+             longitudeDelta: (maxLong - minLong) * 1.2
           }
         }
 
@@ -91,10 +91,6 @@ class MapViewComponent extends React.Component {
           // if (!this.state.isReady || !location.latitude || !location.longitude) {
           //   return null;
           // }
-
-          console.log({
-            ...this.getCenter()
-          });
 
           return(
             <View style={styles.container}>

@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     height: 150,
     // opacity: 0.5
   },
-  cardText:{
-    fontSize:20
+  caption: {
+    fontSize:40
   }
 });
 
@@ -143,7 +143,7 @@ class Categories extends React.Component {
                 resizeMode='cover'
                 style={styles.cardImage}
                 source={card.image} />
-              <Text>{card.caption}</Text>
+              <Text style={styles.caption}>{card.caption}</Text>
             </TouchableOpacity>;
           })}
         </View>

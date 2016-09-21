@@ -9,11 +9,6 @@ import Itinerary from "../../../itinerary/itinerary";
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40
-  },
-  backButton: {
-    position: 'absolute',
-    top: 0,
-    left: 0
   }
 });
 
@@ -62,21 +57,10 @@ class Places extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{itinerary.name}</Text>
         <PhotoSwiper
           photos={cards}
           onSwipe={this.handleSwipe}
         />
-        <TouchableHighlight
-        style={styles.backButton}
-        onPress={() => {
-          this.props.navigator.push({
-            name: 'SetLocation',
-            component: SetLocation,
-            itinerary: new Itinerary()
-          });
-        }
-    }><Text>Back</Text></TouchableHighlight>
       </View>
     );
   }
