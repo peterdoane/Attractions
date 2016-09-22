@@ -5,16 +5,19 @@ import {
   Text,
   TabBarIOS,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 import Discover from "./discover/discover";
 import discoverIcon from '../../images/photograph.png';
 import placesIcon from '../../images/listing-option.png';
 import locationIcon from '../../images/location-icon.png';
-import Itineraries from '../itineraries/itineraries';
+import ItinerariesView from '../itineraries/itineraries';
 import MapView from './mapView/mapView';
 import { inject, observer } from "mobx-react/native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SetLocation from './setLocation/setLocation';
+import Itinerary from "../../itinerary/itinerary";
+
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +39,10 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     zIndex:1
+  },
+  plus: {
+    paddingTop: 7,
+    padding:10
   }
 })
 
@@ -57,6 +64,7 @@ class TabBar extends Component {
         <TouchableHighlight
           style={styles.createButton}
           onPress={() => {
+            console.log(this.props.navigator);
             this.props.navigator.push({
               name: 'SetLocation',
               component: SetLocation,
@@ -65,7 +73,7 @@ class TabBar extends Component {
           }
         }
         >
-          <Icon name="rocket" size={30} color="#0000ff" />
+          <Icon style={styles.plus}name="plus-square" size={30} color="black" />
         </TouchableHighlight>
         <Text style={styles.itineraryName}>{itinerary.name}</Text>
       </View>
@@ -95,7 +103,7 @@ class TabBar extends Component {
                 selectedTab: 'places'
               });
             }}>
-            <Itineraries/>
+            <ItinerariesView/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Map"

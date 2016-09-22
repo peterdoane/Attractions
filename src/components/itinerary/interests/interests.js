@@ -59,11 +59,21 @@ const styles = StyleSheet.create({
   card: {
     width: (width - 50) / 3,
     height: 150,
+    justifyContent: 'center',
+    alignItems: 'center'
     //opacity: 0.5
   },
   cardImage: {
-    width: 90,
-    height: 90
+    width: 80,
+    height: 80,
+  },
+  cardText: {
+    marginTop: 4,
+    fontSize: 20,
+    textAlign: 'center',
+    color: "#4D555B",
+    paddingLeft: 4,
+    paddingRight: 4
   },
   checkMark: {
     width: 16,
@@ -203,7 +213,7 @@ class ItineraryComponent extends React.Component {
                 resizeMode='contain'
                 style={styles.cardImage}
                 source={card.image} />
-              <Text>{card.caption}</Text>
+              <Text style={styles.cardText}>{card.caption}</Text>
               </View>
             </TouchableHighlight>;
           })}

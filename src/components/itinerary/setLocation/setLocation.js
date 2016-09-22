@@ -59,6 +59,8 @@ class SetLocation extends React.Component {
           console.log(itinerary);
             navigator.geolocation.getCurrentPosition(
               position => {
+                console.log('whatev',itinerary);
+
                 itinerary.location.latitude = position.coords.latitude;
                 itinerary.location.longitude = position.coords.longitude;
                 this.setState({ isReady: true });

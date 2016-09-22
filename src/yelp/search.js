@@ -2,7 +2,7 @@ export default function search(location, interests) {
   return new Promise((resolve, reject) => {
     const term = interests.join(",");
     const finalLocation = `${location.latitude},${location.longitude}`;
-    const apiUrl = `http://localhost:3333/searchYelp?term=${encodeURIComponent(term)}&ll=${encodeURIComponent(finalLocation)}`;
+    const apiUrl = `https://peterdoane-attraction.herokuapp.com/searchYelp?term=${encodeURIComponent(term)}&ll=${encodeURIComponent(finalLocation)}`;
     fetch(apiUrl)
       .then(res => res.json())
       .then((res) => {
