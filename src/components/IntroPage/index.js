@@ -11,15 +11,16 @@ import Itinerary from "../../itinerary/itinerary";
       opacity: 0.5
     },
     logo: {
+      marginTop: 43,
       height:139,
       width:214,
     },
     subcontainer: {
       position: 'absolute',
-      top: 43,
+      top: 0,
       left: 0,
-      width: 414,
-      height: 567,
+      right: 0,
+      bottom: 0,
       alignItems: 'center'
     },
     callToAction: {
@@ -44,7 +45,8 @@ import Itinerary from "../../itinerary/itinerary";
       paddingBottom: 72,
       paddingLeft: 44,
       paddingRight:35,
-      paddingTop: 28
+      paddingTop: 28,
+      textAlign: 'center'
     }
   });
 

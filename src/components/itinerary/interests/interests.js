@@ -58,10 +58,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: (width - 50) / 3,
-    height: 150,
-    justifyContent: 'center',
-    alignItems: 'center'
-    //opacity: 0.5
+    height: 150
   },
   cardImage: {
     width: 80,
@@ -83,8 +80,26 @@ const styles = StyleSheet.create({
     right: 0
   },
   done: {
-    alignItems: 'flex-end',
-    marginLeft: 340
+    position: 'absolute',
+    right: 4,
+    top: 0,
+    bottom: 0,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  unselectedCard: {
+    width: (width - 50) / 3,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  selectedCard: {
+    width: (width - 50) / 3,
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, .8)'
   }
 });
 
@@ -94,7 +109,6 @@ class ItineraryComponent extends React.Component {
     this.state = {
       cards: []
     };
-    console.log(props.itinerary);
   }
 
   toggleCard(queryName) {
@@ -183,8 +197,8 @@ class ItineraryComponent extends React.Component {
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.titleText}>Name Your Itinerary</Text>
-          <TouchableHighlight onPress={this.handleSubmit}>
-            <Text style={styles.done}>Done</Text>
+          <TouchableHighlight onPress={this.handleSubmit} style={styles.done}>
+            <Text>Done</Text>
           </TouchableHighlight>
         </View>
         <TextInput
@@ -207,8 +221,7 @@ class ItineraryComponent extends React.Component {
               key={index}
               style={style}
               onPress={this.toggleCard.bind(this, card.queryName)}>
-              <View>
-              {selected ? <Image style={styles.checkMark} source={checkMark} /> : null}
+              <View style={selected ? styles.selectedCard : styles.unselectedCard}>
               <Image
                 resizeMode='contain'
                 style={styles.cardImage}

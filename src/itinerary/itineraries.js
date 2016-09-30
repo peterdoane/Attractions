@@ -9,6 +9,7 @@ class Itineraries {
       isLoaded: false,
       activeIndex: 0
     });
+    console.log("CREATE!");
   }
 
   toJSON() {
@@ -16,21 +17,24 @@ class Itineraries {
   }
 
   set active(index) {
+    console.log(index);
     this.activeIndex = index;
-    this.itineraries.forEach(itinerary => itinerary.active = false);
-    this.itineraries[index].active = true;
+    //this.itineraries.forEach(itinerary => itinerary.active = false);
+    //this.itineraries[index].active = true;
   }
 
   get active() {
-    const activeItinerary = this.itineraries.filter(itinerary => itinerary.active);
-    if (activeItinerary.length) return activeItinerary.shift();
-    return this.itineraries.slice().shift();
+    return this.itineraries[this.activeIndex];
+    //const activeItinerary = this.itineraries.filter(itinerary => itinerary.active);
+    //if (activeItinerary.length) return activeItinerary.shift();
+    //return this.itineraries.slice().shift();
   }
 
   create(itinerary) {
-    this.itineraries.forEach(itinerary => itinerary.active = false);
+    //this.itineraries.forEach(itinerary => itinerary.active = false);
     this.itineraries.push(itinerary);
-    itinerary.active = true;
+    //itinerary.active = true;
+    this.activeIndex = this.itineraries.length - 1;
     return itinerary;
   }
 

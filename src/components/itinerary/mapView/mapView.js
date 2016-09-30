@@ -78,11 +78,14 @@ class MapViewComponent extends React.Component {
              }
            })
 
+           const latitudeDelta = (maxLat - minLat) * 1.2;
+           const longitudeDelta = (maxLong - minLong) * 1.2;
+
            return {
              latitude:(minLat + maxLat)/2,
              longitude:(minLong + maxLong)/2,
-             latitudeDelta: (maxLat - minLat) * 1.2,
-             longitudeDelta: (maxLong - minLong) * 1.2
+             latitudeDelta: latitudeDelta || 0.01,
+             longitudeDelta: longitudeDelta || 0.01
           }
         }
 

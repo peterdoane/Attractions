@@ -42,18 +42,25 @@ class Lists extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dsItineraries: ds.cloneWithRows((
-        props.itineraries && props.itineraries.itineraries ? props.itineraries.itineraries.slice() : []))
+      dsItineraries: ds.cloneWithRows(this.itineraries)
     };
   }
 
-  renderRow = (itinerary, section, index) => {
+  get itineraries() {
+    const itineraries = this.props.itineraries && this.props.itineraries.itineraries ?
+      this.props.itineraries.itineraries.slice() : [];
+
+    return itineraries.map((itinerary, idx) => ({ itinerary, idx })).reverse();
+  }
+
+  renderRow = ({ itinerary, idx }, section, index) => {
     return (
       <View>
         <TouchableHighlight
           style={styles.rowContainer}
           onPress={event => {
-            this.props.itineraries.active = index;
+            console.log(this.props.itineraries);
+            this.props.itineraries.activeIndex = idx;
             this.props.itineraries.save();
             //AsyncStorage.setItem('activeItinerary', JSON.stringify(itinerary))
             this.props.navigator.push({

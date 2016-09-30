@@ -8,7 +8,7 @@ import Itinerary from "../../../itinerary/itinerary";
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 40
+  
   }
 });
 

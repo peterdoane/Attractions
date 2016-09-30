@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   backgroundImage: {
+    height: 736,
+    width:414,
     opacity: 0.5
   },
   subContainer: {
@@ -52,7 +54,6 @@ class FinalProject extends Component {
   render() {
     if (!this.state.isReady) return null;
 
-    console.log("hi");
     return (
       <Provider itineraries={this.state.itineraries}>
       <View style={styles.container}>

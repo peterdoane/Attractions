@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {inject, observer} from "mobx-react/native";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 import {
   AppRegistry,
@@ -21,27 +23,42 @@ var styles = StyleSheet.create({
     paddingBottom: 40
   },
   rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     margin: 15,
     padding: 15,
     borderColor: 'black',
-    borderWidth: 1, //StyleSheet.hairlineWidth for "IOS" feel
+    borderWidth: 1,
     backgroundColor: '#f3f3f3'
   },
+  innerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   rowImage: {
-    width: 70,
-    height: 70,
+    width: 120,
+    height: 120,
     marginRight: 20
   },
   rowContent: {
-    flexDirection: 'column',
+    flex: 1
   },
   rowText: {
-    fontSize: 13
+    fontSize: 16,
+    lineHeight: 24
+  },
+  rowTextBold: {
+    fontWeight: "800",
+    fontSize: 16,
+    lineHeight: 24,
+    marginRight: 40
   },
   itineraryList: {
     flex:1
+  },
+  mapLink: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 15
   }
 })
 
@@ -56,11 +73,11 @@ class ItineraryPlaces extends Component {
   handleClick = (place) => {
     let displayAddress = "";
     place.location.display_address.forEach(part => displayAddress += part + ", ");
-    displayAddress = encodeURIComponent(displayAddress.substring(0, displayAddress.length - 2));
+    displayAddress = displayAddress.substring(0, displayAddress.length - 2);
+    displayAddress.replace(" ", "+");
 
     const link = `http://maps.apple.com/?`+
-      `ll=${place.location.coordinate.latitude},${place.location.coordinate.longitude}` +
-      `&saddr=${displayAddress}`;
+      `daddr=${displayAddress}`;
 
     Linking.openURL(link)
       .catch(err => console.error('An error occurred', err));
@@ -69,17 +86,19 @@ class ItineraryPlaces extends Component {
   renderRow = (place) => {
     return (
       <View style={styles.rowContainer}>
-        <Image style={styles.rowImage} source={{uri:place.image_url}} />
-        <View style={styles.rowContent}>
-          <Text style={styles.rowText}>{place.name}</Text>
-          {
-            place.location.display_address.map(addressLine => (
-              <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
-            ))
-          }
+        <View style={styles.innerContainer}>
+          <Image style={styles.rowImage} source={{uri:place.image_url}} />
+          <View style={styles.rowContent}>
+            <Text style={styles.rowTextBold}>{place.name}</Text>
+            {
+              place.location.display_address.map(addressLine => (
+                <Text key={addressLine} style={styles.rowText}>{addressLine}</Text>
+              ))
+            }
+          </View>
         </View>
-        <TouchableHighlight onPress={() => this.handleClick(place)}>
-          <Text>Open in maps</Text>
+        <TouchableHighlight onPress={() => this.handleClick(place)} style={styles.mapLink}>
+          <Icon name="external-link" size={30} color="black" />
         </TouchableHighlight>
       </View>
     )

@@ -6,6 +6,7 @@ import {
   TabBarIOS,
   StyleSheet,
   TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 import Discover from "./discover/discover";
 import discoverIcon from '../../images/photograph.png';
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   header: {
-    backgroundColor: "#ff0000",
+    backgroundColor: "rgba(255, 87, 34, .5)",
     height: 41,
     marginTop: 26,
   },
@@ -40,9 +41,18 @@ const styles = StyleSheet.create({
     top: 0,
     zIndex:1
   },
+  resetButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex:1
+  },
   plus: {
     paddingTop: 7,
     padding:10
+  },
+  tabBarItem: {
+
   }
 })
 
@@ -55,8 +65,8 @@ class TabBar extends Component {
   }
 
   render() {
-    const { itineraries } = this.props;
-    const itinerary = itineraries.itineraries[itineraries.activeIndex];
+    const { itineraries, activeIndex } = this.props;
+    const itinerary = itineraries.itineraries[activeIndex];
 
     return (
       <View style={styles.container}>
@@ -76,6 +86,15 @@ class TabBar extends Component {
           <Icon style={styles.plus}name="plus-square" size={30} color="black" />
         </TouchableHighlight>
         <Text style={styles.itineraryName}>{itinerary.name}</Text>
+        <TouchableHighlight
+          style={styles.resetButton}
+          onPress={() => {
+            AsyncStorage.clear();
+          }
+        }
+        >
+          <Text>Reset</Text>
+        </TouchableHighlight>
       </View>
         <TabBarIOS
           unselectedTintColor="yellow"
@@ -95,6 +114,7 @@ class TabBar extends Component {
             <Discover navigator={this.props.navigator}/>
           </TabBarIOS.Item>
           <TabBarIOS.Item
+            style={styles.tabBarItem}
             title="Places"
             icon={placesIcon}
             selected={this.state.selectedTab === 'places'}
@@ -123,6 +143,9 @@ class TabBar extends Component {
   }
 }
 
-export default inject(stores => ({
-  itineraries: stores.itineraries
-}))(observer(TabBar));
+export default inject(stores => {
+  console.log("--->", stores.itineraries.activeIndex);
+  return {
+  itineraries: stores.itineraries,
+  activeIndex: stores.itineraries.activeIndex
+}})(observer(TabBar));
