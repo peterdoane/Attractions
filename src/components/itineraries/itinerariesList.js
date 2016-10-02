@@ -60,7 +60,7 @@ class Lists extends Component {
           style={styles.rowContainer}
           onPress={event => {
             console.log(this.props.itineraries);
-            this.props.itineraries.activeIndex = idx;
+            this.props.itineraries.active = idx;
             this.props.itineraries.save();
             //AsyncStorage.setItem('activeItinerary', JSON.stringify(itinerary))
             this.props.navigator.push({

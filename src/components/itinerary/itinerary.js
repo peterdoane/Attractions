@@ -66,6 +66,7 @@ class TabBar extends Component {
 
   render() {
     const { itineraries, activeIndex } = this.props;
+    console.log('itineraries', itineraries);
     const itinerary = itineraries.itineraries[activeIndex];
 
     return (
@@ -142,10 +143,15 @@ class TabBar extends Component {
     );
   }
 }
+// inject(..) => enhancer(TabBar) => WrapperComponent
 
-export default inject(stores => {
+// observer(onject(TabBar))
+
+export default observer(inject(stores => {
+  console.log(stores);
+  // why is data not flowing back into the inject funciton when it changes in the itinerary store
   console.log("--->", stores.itineraries.activeIndex);
   return {
   itineraries: stores.itineraries,
   activeIndex: stores.itineraries.activeIndex
-}})(observer(TabBar));
+}})(TabBar));

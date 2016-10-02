@@ -98,11 +98,12 @@ class ItineraryPlaces extends Component {
           </View>
         </View>
         <TouchableHighlight onPress={() => this.handleClick(place)} style={styles.mapLink}>
-          <Icon name="external-link" size={30} color="black" />
+          <Icon name="location-arrow" size={30} color="black" />
         </TouchableHighlight>
       </View>
     )
   };
+
 
   render() {
     return <View style={styles.container}>

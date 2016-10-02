@@ -17,7 +17,7 @@ class Itineraries {
   }
 
   set active(index) {
-    console.log(index);
+    console.log('active',index);
     this.activeIndex = index;
     //this.itineraries.forEach(itinerary => itinerary.active = false);
     //this.itineraries[index].active = true;
@@ -62,6 +62,7 @@ class Itineraries {
   }
 
   save() {
+    console.log(this.toJSON());
     AsyncStorage.setItem('itineraries', JSON.stringify(this.toJSON()));
   }
 }
