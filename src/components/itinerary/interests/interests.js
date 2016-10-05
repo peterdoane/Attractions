@@ -41,13 +41,15 @@ const styles = StyleSheet.create({
     height: 64,
     backgroundColor: 'rgba(196,196,196,0.57)',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   subtitle: {
     width: width,
     height: 64,
     padding: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 22
   },
   cards: {
     marginLeft: 25,
@@ -86,7 +88,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+  },
+  doneText:{
+    fontSize:22
   },
   unselectedCard: {
     width: (width - 50) / 3,
@@ -196,15 +201,16 @@ class ItineraryComponent extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.title}>
-          <Text style={styles.titleText}>Name Your Itinerary</Text>
           <TouchableHighlight onPress={this.handleSubmit} style={styles.done}>
-            <Text>Done</Text>
+            <Text style={styles.doneText}>Done</Text>
           </TouchableHighlight>
         </View>
         <TextInput
+          placeholder='name your itinerary'
           defaultValue={itinerary.name}
           onChangeText={name => itinerary.name = name}
           style={styles.itineraryName}
+          backgroundColor='white'
         />
         <Text style={styles.subtitle}>Choose your interests:</Text>
         <View style={styles.cards}>

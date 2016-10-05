@@ -5,10 +5,17 @@ import PhotoSwiper from "./photoSwiper";
 import search from "../../../yelp/search";
 import SetLocation from "../setLocation/setLocation";
 import Itinerary from "../../../itinerary/itinerary";
+import Spinner from 'react-native-spinkit';
 
 const styles = StyleSheet.create({
   container: {
-  
+
+  },
+
+  loaderContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 40
   }
 });
 
@@ -16,7 +23,8 @@ class Places extends Component {
   constructor() {
     super();
     this.state = {
-      cards: []
+      cards: [],
+      cardsReceived: false
     };
   }
 
@@ -53,13 +61,26 @@ class Places extends Component {
 
   render() {
     const { itinerary } = this.props;
-    const { cards } = this.state;
+    const { cards, cardsReceived } = this.state;
 
     return (
       <View style={styles.container}>
-        <PhotoSwiper
+        {cardsReceived && <PhotoSwiper
           photos={cards}
           onSwipe={this.handleSwipe}
+        />}
+        {!cardsReceived && this.renderLoader()}
+      </View>
+    );
+  }
+
+  renderLoader() {
+    return (
+      <View style={styles.loaderContainer}>
+        <Spinner
+          size={100}
+          type={"Wave"}
+          color={"#FFFFFF"}
         />
       </View>
     );

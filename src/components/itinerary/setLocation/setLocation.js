@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
+    padding: 28,
   }
 });
 
@@ -127,6 +128,8 @@ class SetLocation extends React.Component {
                 <TextInput style={styles.textInput}
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text}
+                placeholder='111 S Jackson St. Seattle WA 98104'
+                backgroundColor='white'
                 />
               </View>
             </View>

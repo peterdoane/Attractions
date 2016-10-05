@@ -51,6 +51,8 @@ class PhotoSwiper extends Component {
 
           handleYup={this.handleYup}
           handleNope={this.handleNope}
+          showYup={true}
+          showNope={true}
         />
         {/*<View style={styles.buttons}>
           <TouchableHighlight style={styles.dislike}>

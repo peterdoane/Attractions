@@ -1,6 +1,7 @@
 package com.withoutignite1;
 
 import com.facebook.react.ReactActivity;
+import com.react.rnspinkit.RNSpinkitPackage;
 
 public class MainActivity extends ReactActivity {
 
