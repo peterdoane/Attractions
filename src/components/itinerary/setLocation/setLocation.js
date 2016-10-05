@@ -67,8 +67,8 @@ class SetLocation extends React.Component {
                 this.setState({ isReady: true });
               },
               error => {
-                itinerary.location.latitude = -73.5;
-                itinerary.location.longitude = 45.5;
+                itinerary.location.latitude = 47.5989620;
+                itinerary.location.longitude = -122.3337990;
                 this.setState({ isReady: true });
               },
               {

@@ -3,12 +3,15 @@ export default function search(location, interests) {
     const term = interests.join(",");
     const finalLocation = `${location.latitude},${location.longitude}`;
     const apiUrl = `https://peterdoane-attraction.herokuapp.com/searchYelp?term=${encodeURIComponent(term)}&ll=${encodeURIComponent(finalLocation)}`;
+    console.log(apiUrl);
     fetch(apiUrl)
       .then(res => res.json())
       .then((res) => {
+        console.log(res);
         resolve(res);
       })
       .catch(err => {
+        console.log(err);
         reject();
       });
   });
