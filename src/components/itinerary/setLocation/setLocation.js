@@ -1,4 +1,5 @@
 import React from 'react';
+import Geocoder from 'react-native-geocoder';
 import {
   StyleSheet,
   View,
@@ -9,7 +10,7 @@ import {
   TextInput
 } from 'react-native';
 import Interests from '../interests/interests';
-import { inject, observer } from "mobx-react/native";
+import {inject, observer} from "mobx-react/native";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,113 +33,97 @@ const styles = StyleSheet.create({
     // width: 375,
     justifyContent: 'center',
     alignItems: 'center',
-    height:76
+    height: 76
   },
   callToActionButton: {
     color: 'black',
-    fontSize:20
+    fontSize: 20
   },
   textInput: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    padding: 28,
+    paddingRight: 12,
+    paddingLeft: 12
   }
 });
 
 class SetLocation extends React.Component {
 
-        constructor(props) {
-            super(props);
-            this.state = {
-                isReady: false
-            };
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isReady: false
+    };
+  }
 
-        componentWillMount(){
-          const { itinerary } = this.props;
-          console.log(itinerary);
-            navigator.geolocation.getCurrentPosition(
-              position => {
-                console.log('whatev',itinerary);
+  componentWillMount() {
+    const {itinerary} = this.props;
+    console.log(itinerary);
+    navigator.geolocation.getCurrentPosition(position => {
+      console.log('whatev', itinerary);
 
-                itinerary.location.latitude = position.coords.latitude;
-                itinerary.location.longitude = position.coords.longitude;
-                this.setState({ isReady: true });
-              },
-              error => {
-                itinerary.location.latitude = 47.5989620;
-                itinerary.location.longitude = -122.3337990;
-                this.setState({ isReady: true });
-              },
-              {
-                enableHighAccuracy: true,
-                timeout: 20000,
-                maximumAge: 1000
-              }
-            );
-        }
+      itinerary.location.latitude = position.coords.latitude;
+      itinerary.location.longitude = position.coords.longitude;
+      Geocoder.geocodePosition({lat: itinerary.location.latitude, lng: itinerary.location.longitude}).then(res => {
+        console.log(res);
+        // res is an Array of geocoding object (see below)
+        this.setState({address: res[0].formattedAddress});
+      }).catch(err => console.log(err));
+      this.setState({isReady:true})
+    }, error => {
+      itinerary.location.latitude = 47.5989620;
+      itinerary.location.longitude = -122.3337990;
+      this.setState({isReady: true});
+    }, {
+      enableHighAccuracy: true,
+      timeout: 20000,
+      maximumAge: 1000
+    });
+  }
 
-        setLocation = () => {
-          this.props.navigator.push({
-            component: Interests,
-            itinerary: this.props.itinerary
-          });
-        };
+  setLocation = () => {
+    this.props.navigator.push({component: Interests, itinerary: this.props.itinerary});
+  };
 
-        render() {
-          const { itinerary } = this.props;
+  render() {
+    const {itinerary} = this.props;
 
-          if (!this.state.isReady || !itinerary.location.latitude || !itinerary.location.longitude) {
-            return null;
+    if (!this.state.isReady || !itinerary.location.latitude || !itinerary.location.longitude) {
+      return null;
+    }
+
+    return (
+      <View style={styles.container}>
+        <MapView region={{
+          latitude: itinerary.location.latitude,
+          longitude: itinerary.location.longitude,
+          latitudeDelta: 0.12,
+          longitudeDelta: 0.065
+        }} annotations={[{
+            latitude: itinerary.location.latitude,
+            longitude: itinerary.location.longitude
           }
+        ]} style={{
+          flex: 1
+        }}/>
 
-          return(
-            <View style={styles.container}>
-              <MapView
-                region = {
-                  {
-                    latitude: itinerary.location.latitude,
-                    longitude: itinerary.location.longitude,
-                    latitudeDelta: 0.12,
-                    longitudeDelta: 0.065
-                  }
-                }
-                annotations={[
-                  {
-                    latitude: itinerary.location.latitude,
-                    longitude: itinerary.location.longitude
-                  }
-                ]}
-                style = {
-                  {
-                    flex: 1
-                  }
-                }
-              />
+        <View style={styles.subcontainer}>
+          <TouchableHighlight style={styles.callToAction} onPress={this.setLocation}>
+            <Text style={styles.callToActionButton}>
+              Set location
+            </Text>
+          </TouchableHighlight>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+            backgroundColor='white'
+            placeholder={this.state.address}/>
+        </View>
+      </View>
+    )
+  }
+}
 
-              <View style={styles.subcontainer}>
-                <TouchableHighlight
-                  style={styles.callToAction}
-                  onPress={this.setLocation}>
-                  <Text style={styles.callToActionButton}>
-                    Set location
-                  </Text>
-                </TouchableHighlight>
-                <TextInput style={styles.textInput}
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-                placeholder='111 S Jackson St. Seattle WA 98104'
-                backgroundColor='white'
-                />
-              </View>
-            </View>
-          )
-        }
-      }
-
-
-export default inject((stores, props) => ({
-  itineraries: stores.itineraries,
-  itinerary: props.itinerary
-}))(observer(SetLocation));
+export default inject((stores, props) => ({itineraries: stores.itineraries, itinerary: props.itinerary}))(observer(SetLocation));
