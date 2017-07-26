@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class FinalProject extends Component {
+class AttractionsSwipe extends Component {
   constructor() {
     super();
     this.state = {
@@ -83,4 +83,4 @@ class FinalProject extends Component {
   }
 }
 
-AppRegistry.registerComponent('withoutignite1', () => FinalProject);
+AppRegistry.registerComponent('AttractionsSwipe', () => AttractionsSwipe);
