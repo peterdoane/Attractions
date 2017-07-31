@@ -65,6 +65,10 @@ class SetLocation extends React.Component {
 
       itinerary.location.latitude = position.coords.latitude;
       itinerary.location.longitude = position.coords.longitude;
+      this.setState({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
       Geocoder.geocodePosition({lat: itinerary.location.latitude, lng: itinerary.location.longitude}).then(res => {
         console.log(res);
         // res is an Array of geocoding object (see below)
@@ -74,6 +78,10 @@ class SetLocation extends React.Component {
     }, error => {
       itinerary.location.latitude = 47.5989620;
       itinerary.location.longitude = -122.3337990;
+      this.setState({
+        latitude: 47.5989620,
+        longitude: -122.3337990
+      });
       this.setState({isReady: true});
     }, {
       enableHighAccuracy: true,
@@ -86,23 +94,44 @@ class SetLocation extends React.Component {
     this.props.navigator.push({component: Interests, itinerary: this.props.itinerary});
   };
 
+  searchNewLocation(text){
+    this.newLocation = text;
+    this.launchSearch();
+    this.setState({text});
+  }
+
+  launchSearch(){
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      Geocoder.geocodeAddress(this.newLocation).then(res => {
+        if(res && res.length > 0){
+          this.setState({
+            latitude: res[0].position.lat,
+            longitude: res[0].position.lng
+          });
+        }
+        console.log(res);
+      })
+    }, 1000)
+  }
+
   render() {
     const {itinerary} = this.props;
 
-    if (!this.state.isReady || !itinerary.location.latitude || !itinerary.location.longitude) {
+    if (!this.state.isReady || !this.state.latitude || !this.state.longitude) {
       return null;
     }
 
     return (
       <View style={styles.container}>
         <MapView region={{
-          latitude: itinerary.location.latitude,
-          longitude: itinerary.location.longitude,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
           latitudeDelta: 0.12,
           longitudeDelta: 0.065
         }} annotations={[{
-            latitude: itinerary.location.latitude,
-            longitude: itinerary.location.longitude
+            latitude: this.state.latitude,
+            longitude: this.state.longitude
           }
         ]} style={{
           flex: 1
@@ -116,7 +145,7 @@ class SetLocation extends React.Component {
           </TouchableHighlight>
           <TextInput
             style={styles.textInput}
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={(text) => this.searchNewLocation(text)}
             value={this.state.text}
             backgroundColor='white'
             placeholder={this.state.address}/>
