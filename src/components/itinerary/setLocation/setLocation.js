@@ -11,21 +11,15 @@ import {
 } from 'react-native';
 import Interests from '../interests/interests';
 import {inject, observer} from "mobx-react/native";
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
   },
   subcontainer: {
-    flex: 1,
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    right: 0,
-    // width: 375,
-    // height: 200,
-    flexDirection: 'column-reverse',
-    alignItems: 'stretch'
+    flex: 0,
   },
   callToAction: {
     backgroundColor: 'green',
@@ -123,34 +117,37 @@ class SetLocation extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
-        <MapView region={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          latitudeDelta: 0.12,
-          longitudeDelta: 0.065
-        }} annotations={[{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude
-          }
-        ]} style={{
-          flex: 1
-        }}/>
-
-        <View style={styles.subcontainer}>
-          <TouchableHighlight style={styles.callToAction} onPress={this.setLocation}>
-            <Text style={styles.callToActionButton}>
-              Set location
-            </Text>
-          </TouchableHighlight>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={(text) => this.searchNewLocation(text)}
-            value={this.state.text}
-            backgroundColor='white'
-            placeholder={this.state.address}/>
+        <View style={styles.container}>
+          <View style={{flex: 1}}>
+            <MapView region={{
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              latitudeDelta: 0.12,
+              longitudeDelta: 0.065
+            }} annotations={[{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude
+              }
+            ]} style={{
+              flex: 1
+            }}/>
+          </View>
+          <View style={styles.subcontainer}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(text) => this.searchNewLocation(text)}
+              value={this.state.text}
+              backgroundColor='white'
+              placeholder={this.state.address}/>
+              <TouchableHighlight style={styles.callToAction} onPress={this.setLocation}>
+                <Text style={styles.callToActionButton}>
+                  Set location
+                </Text>
+              </TouchableHighlight>
+          </View>
+          <KeyboardSpacer/>
         </View>
-      </View>
+
     )
   }
 }

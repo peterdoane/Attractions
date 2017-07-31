@@ -7,7 +7,8 @@ import {
   TextInput,
   Image,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView
 } from 'react-native';
 import { inject, observer } from "mobx-react/native";
 import Itinerary from '../../../itinerary/itinerary';
@@ -63,12 +64,12 @@ const styles = StyleSheet.create({
     height: 150
   },
   cardImage: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
   },
   cardText: {
     marginTop: 4,
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     color: "#4D555B",
     paddingLeft: 4,
@@ -213,30 +214,32 @@ class ItineraryComponent extends React.Component {
           backgroundColor='white'
         />
         <Text style={styles.subtitle}>Choose your interests:</Text>
-        <View style={styles.cards}>
-          {cards.map((card, index) => {
-            const style = [
-              styles.card,
-              StyleSheet.create({ background: {
-                backgroundColor: card.color
-              } }).background
-            ];
+        <ScrollView>
+          <View style={styles.cards}>
+            {cards.map((card, index) => {
+              const style = [
+                styles.card,
+                StyleSheet.create({ background: {
+                  backgroundColor: card.color
+                } }).background
+              ];
 
-            var selected = this.state.cards.some(c => c === card.queryName);
-            return <TouchableHighlight
-              key={index}
-              style={style}
-              onPress={this.toggleCard.bind(this, card.queryName)}>
-              <View style={selected ? styles.selectedCard : styles.unselectedCard}>
-              <Image
-                resizeMode='contain'
-                style={styles.cardImage}
-                source={card.image} />
-              <Text style={styles.cardText}>{card.caption}</Text>
-              </View>
-            </TouchableHighlight>;
-          })}
-        </View>
+              var selected = this.state.cards.some(c => c === card.queryName);
+              return <TouchableHighlight
+                key={index}
+                style={style}
+                onPress={this.toggleCard.bind(this, card.queryName)}>
+                <View style={selected ? styles.selectedCard : styles.unselectedCard}>
+                <Image
+                  resizeMode='contain'
+                  style={styles.cardImage}
+                  source={card.image} />
+                <Text style={styles.cardText}>{card.caption}</Text>
+                </View>
+              </TouchableHighlight>;
+            })}
+          </View>
+        </ScrollView>
       </View>
     );
   }

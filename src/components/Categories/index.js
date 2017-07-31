@@ -7,7 +7,8 @@ import {
   Text,
   TextInput,
   Image,
-  Dimensions
+  Dimensions,
+  ScrollView,
   // AsyncStorage
 } from 'react-native';
 
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   cards: {
     marginLeft: 25,
     width: width - 50,
-    height: 667 - 64 * 3,
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
@@ -120,34 +121,39 @@ class Categories extends React.Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.title}>
-          <Text style={styles.titleText}>Your Itinerary</Text>
+        <View style={{
+          flex:0,
+        }}>
+          <View style={styles.title}>
+            <Text style={styles.titleText}>Your Itinerary</Text>
+          </View>
+          <TextInput
+            style={styles.itineraryName} />
+          <Text style={styles.subtitle}>ab</Text>
         </View>
-        <TextInput
-          style={styles.itineraryName} />
-        <Text style={styles.subtitle}>ab</Text>
+        <ScrollView>
         <View style={styles.cards}>
-          {cards.map((card, index) => {
-            const style = [
-              styles.card,
-              StyleSheet.create({ background: {
-                backgroundColor: card.color
-              } }).background
-            ];
-
-            return <TouchableOpacity
-              key={index}
-              style={style}
-              onPress={this.toggleCard.bind(this, index)}>
-              <Image
-                resizeMode='cover'
-                style={styles.cardImage}
-                source={card.image} />
-              <Text style={styles.caption}>{card.caption}</Text>
-            </TouchableOpacity>;
-          })}
+            {cards.map((card, index) => {
+              const style = [
+                styles.card,
+                StyleSheet.create({ background: {
+                  backgroundColor: card.color
+                } }).background
+              ];
+              return <TouchableOpacity
+                key={index}
+                style={style}
+                onPress={this.toggleCard.bind(this, index)}>
+                <Image
+                  resizeMode='cover'
+                  style={styles.cardImage}
+                  source={card.image} />
+                <Text style={styles.caption}>{card.caption}</Text>
+              </TouchableOpacity>;
+            })}
         </View>
-      </View>
+      </ScrollView>
+      // </View>
     );
   }
 }
