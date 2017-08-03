@@ -49,10 +49,7 @@ import Itinerary from "../../itinerary/itinerary";
       alignItems:'center',
       fontSize: 24,
       color:'#ffffff',
-      paddingBottom: 72,
-      paddingLeft: 44,
-      paddingRight:35,
-      paddingTop: 28,
+      padding:20,
       textAlign: 'center'
     }
   });
@@ -75,18 +72,19 @@ class IntroPage extends Component{
         <View style={{flex:1}}>
           <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
             <Image source={require('../../images/Attractions-logo.png')} style={styles.logo} />
-            <Text style={styles.introText}>
-                  Attractions uses location
-                  services to serve you photos
-                  to create a quick itinerary in a
-                  new place.
-            </Text>
           </View>
-          <TouchableHighlight
-            style={styles.callToAction}
-            onPress={this.requireLocationPermission.bind(this)}>
-            <Text style={styles.callToActionButton}>OK</Text>
-          </TouchableHighlight>
+          <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+              <Text style={styles.introText}>
+                    {`Attractions uses location\nservices to serve you photos to\n create a quick itinerary in a\nnew place.`}
+              </Text>
+            </View>
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+              <TouchableHighlight
+                style={styles.callToAction}
+                onPress={this.requireLocationPermission.bind(this)}>
+                <Text style={styles.callToActionButton}>OK</Text>
+              </TouchableHighlight>
+            </View>
         </View>
       </View>
     </View>
