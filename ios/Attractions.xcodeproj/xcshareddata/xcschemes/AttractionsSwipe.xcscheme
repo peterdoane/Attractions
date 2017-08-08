@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "AttractionsSwipe.app"
+               BuildableName = "Attractions.temp_caseinsensitive_renameSwipe.app"
                BlueprintName = "AttractionsSwipe"
-               ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+               ReferencedContainer = "container:Attractions.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "AttractionsSwipeTests.xctest"
                BlueprintName = "AttractionsSwipeTests"
-               ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+               ReferencedContainer = "container:Attractions.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "AttractionsSwipeTests.xctest"
                BlueprintName = "AttractionsSwipeTests"
-               ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+               ReferencedContainer = "container:Attractions.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AttractionsSwipe.app"
+            BuildableName = "Attractions.temp_caseinsensitive_renameSwipe.app"
             BlueprintName = "AttractionsSwipe"
-            ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+            ReferencedContainer = "container:Attractions.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AttractionsSwipe.app"
+            BuildableName = "Attractions.temp_caseinsensitive_renameSwipe.app"
             BlueprintName = "AttractionsSwipe"
-            ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+            ReferencedContainer = "container:Attractions.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +99,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AttractionsSwipe.app"
+            BuildableName = "Attractions.temp_caseinsensitive_renameSwipe.app"
             BlueprintName = "AttractionsSwipe"
-            ReferencedContainer = "container:AttractionsSwipe.xcodeproj">
+            ReferencedContainer = "container:Attractions.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
