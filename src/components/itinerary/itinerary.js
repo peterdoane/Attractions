@@ -87,7 +87,7 @@ class TabBar extends Component {
           <Icon style={styles.plus}name="plus-square" size={30} color="black" />
         </TouchableHighlight>
         <Text style={styles.itineraryName}>{itinerary.name}</Text>
-        <TouchableHighlight
+        {/* <TouchableHighlight
           style={styles.resetButton}
           onPress={() => {
             AsyncStorage.clear();
@@ -95,7 +95,7 @@ class TabBar extends Component {
         }
         >
           <Text>Reset</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
       </View>
         <TabBarIOS
           unselectedTintColor="yellow"
